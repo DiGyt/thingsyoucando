@@ -1,6 +1,5 @@
 name: Build Posts Index
 
-# Trigger when posts change OR manually
 on:
   push:
     paths:
@@ -11,31 +10,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 1. Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      # 3. Install gray-matter
       - name: Install dependencies
         run: npm install gray-matter
 
-      # 4. Run the build script
       - name: Build posts index
         run: node build.js
 
-      # 5. Commit & push posts-index.json if it changed
       - name: Commit and push posts-index.json
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add docs/posts-index.json
           git diff-index --quiet HEAD || git commit -m "Update posts-index.json"
-          git push
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

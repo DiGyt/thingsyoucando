@@ -61,7 +61,7 @@ function renderResults(list) {
     const link = document.createElement('a');
 
     // Temporarily link to '#' since you don't have HTML pages yet
-    link.href = '#';
+    link.href = `posts/${post.id}.html`;
     link.textContent = post.title;
 
     li.appendChild(link);

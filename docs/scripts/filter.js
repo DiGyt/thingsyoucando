@@ -1,11 +1,19 @@
 let posts = [];
 
 // Load metadata index
-fetch('/posts-index.json')
-  .then(res => res.json())
+fetch('posts-index.json')
+  .then(res => {
+    if (!res.ok) throw new Error(`Failed to fetch posts-index.json: ${res.status}`);
+    return res.json();
+  })
   .then(data => {
     posts = data;
     renderResults(posts);
+  })
+  .catch(err => {
+    console.error(err);
+    const results = document.getElementById('results');
+    results.innerHTML = '<li>Failed to load posts.</li>';
   });
 
 // Grab filter values
@@ -42,11 +50,20 @@ function filterPosts() {
 function renderResults(list) {
   const results = document.getElementById('results');
   results.innerHTML = '';
+
+  if (list.length === 0) {
+    results.innerHTML = '<li>No posts match the selected filters.</li>';
+    return;
+  }
+
   list.forEach(post => {
     const li = document.createElement('li');
     const link = document.createElement('a');
-    link.href = `/posts/${post.id}.html`; // Optional: can generate HTML from Markdown
+
+    // Temporarily link to '#' since you don't have HTML pages yet
+    link.href = '#';
     link.textContent = post.title;
+
     li.appendChild(link);
     results.appendChild(li);
   });

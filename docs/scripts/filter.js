@@ -40,4 +40,69 @@ function renderResults(list) {
   const results = document.getElementById('results');
   const modal = document.getElementById('post-modal');
   const modalPost = document.getElementById('modal-post');
-  const modalClose = docum
+  const modalClose = document.getElementById('modal-close');
+
+  results.innerHTML = '';
+  modalPost.innerHTML = '';
+
+  if (list.length === 0) {
+    results.innerHTML = '<li>No posts match the selected filters.</li>';
+    return;
+  }
+
+  list.forEach(post => {
+    const li = document.createElement('li');
+    const button = document.createElement('button');
+    button.textContent = post.title;
+    button.className = 'post-button';
+
+    button.addEventListener('click', async () => {
+      try {
+        // Fetch the HTML file of the post
+        const html = await fetch(`posts/${post.id}.html`).then(res => {
+          if (!res.ok) throw new Error(`Failed to fetch post: ${res.status}`);
+          return res.text();
+        });
+
+        modalPost.innerHTML = `
+          <div class="post-container">
+            <div class="metadata">
+              <span class="tag country">${post.country}</span>
+              <span class="tag time">${post.time}</span>
+              <span class="tag online">${post.online ? 'Online' : 'Offline'}</span>
+              ${post.capabilities.map(c => `<span class="tag capabilities">${c}</span>`).join('')}
+              ${post.interests.map(i => `<span class="tag interests">${i}</span>`).join('')}
+            </div>
+            <div class="content">${html}</div>
+          </div>
+        `;
+        modal.style.display = 'block';
+        modal.scrollIntoView({ behavior: 'smooth' });
+      } catch (err) {
+        modalPost.innerHTML = `<p>Failed to load post.</p>`;
+        console.error(err);
+        modal.style.display = 'block';
+      }
+    });
+
+    li.appendChild(button);
+    results.appendChild(li);
+  });
+
+  // Close modal when clicking X
+  modalClose.onclick = () => {
+    modal.style.display = 'none';
+    modalPost.innerHTML = '';
+  };
+
+  // Close modal when clicking outside the content box
+  window.onclick = event => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      modalPost.innerHTML = '';
+    }
+  };
+}
+
+// Attach filter events
+document.querySelectorAll('#filters select, #filters input').forEach(el => el.addEventListener('change', filterPosts));

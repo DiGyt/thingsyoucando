@@ -1,0 +1,31 @@
+name: Build Posts Index
+
+on:
+  push:
+    paths:
+      - 'docs/posts/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install gray-matter
+
+      - name: Build posts index
+        run: node build.js
+
+      - name: Commit index
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add docs/posts-index.json
+          git commit -m "Update posts-index.json" || echo "No changes to commit"
+          git push

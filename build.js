@@ -1,26 +1,21 @@
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
+import { JSDOM } from 'jsdom';
 
-const postsDir = './docs/posts';          // ✅ was ./public/posts
-const outputFile = './docs/posts-index.json';  // ✅ was ./posts-index.json
+const postsDir = './docs/posts';
+const outputFile = './docs/posts-index.json';
 
 const postsIndex = [];
 
 fs.readdirSync(postsDir).forEach(file => {
-  if (file.endsWith('.md')) {
+  if (file.endsWith('.html')) {
     const content = fs.readFileSync(path.join(postsDir, file), 'utf-8');
-    const { data } = matter(content);
-
-    postsIndex.push({
-      id: file.replace('.md', ''),
-      title: data.title,
-      country: data.country,
-      time: data.time,
-      online: data.online,
-      capabilities: data.capabilities || [],
-      interests: data.interests || []
-    });
+    const dom = new JSDOM(content);
+    const metadataScript = dom.window.document.querySelector('script.metadata-json');
+    if (metadataScript) {
+      const data = JSON.parse(metadataScript.textContent);
+      postsIndex.push(data);
+    }
   }
 });
 

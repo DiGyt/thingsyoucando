@@ -1,4 +1,90 @@
-/* Modal overlay */
+/* --- BODY & BACKGROUND --- */
+body {
+  font-family: 'Inter', sans-serif;
+  color: #1a1a1a;
+  margin: 0;
+  padding: 0;
+  background: url('../images/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+}
+
+/* Blue overlay to soften background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(30, 60, 120, 0.4); /* soft blue overlay */
+  z-index: -1;
+}
+
+/* --- CENTERED CONTAINER --- */
+#container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* --- HEADER --- */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 700;
+  color: #1a3f6f;
+}
+
+/* --- FILTER STYLING --- */
+#filters select,
+#filters input[type="checkbox"] {
+  margin: 5px 10px 15px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #a0c4ff;
+  background-color: #f0f8ff;
+  font-size: 0.95em;
+}
+
+fieldset {
+  border: none;
+  margin: 10px 0;
+}
+
+fieldset legend {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+/* --- RESULTS LIST --- */
+#results {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+#results li button.post-button {
+  width: 100%;
+  text-align: left;
+  padding: 12px 15px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #e0f0ff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1em;
+  transition: background 0.2s, transform 0.1s;
+}
+
+#results li button.post-button:hover {
+  background-color: #b0d0ff;
+  transform: translateY(-1px);
+}
+
+/* --- MODAL OVERLAY --- */
 .modal {
   display: none; 
   position: fixed; 
@@ -9,20 +95,24 @@
   height: 100%; 
   overflow: auto; 
   background-color: rgba(0,0,0,0.5);
+  transition: opacity 0.3s ease;
 }
 
-/* Modal content box */
+/* --- MODAL CONTENT BOX --- */
 .modal-content {
   background-color: #fff;
   margin: 50px auto;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 25px;
+  border-radius: 12px;
   max-width: 800px;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  max-height: 80vh;
+  overflow-y: auto;
+  transition: transform 0.2s ease;
 }
 
-/* Close button */
+/* --- CLOSE BUTTON --- */
 .close {
   position: absolute;
   top: 10px;
@@ -32,19 +122,34 @@
   cursor: pointer;
 }
 
-/* Metadata styling inside modal */
+/* --- MODAL METADATA TAGS --- */
 .modal .metadata span {
   display: inline-block;
-  margin-right: 10px;
-  margin-bottom: 5px;
-  padding: 3px 6px;
-  background: #eee;
-  border-radius: 4px;
+  margin: 5px 8px 5px 0;
+  padding: 4px 8px;
+  background-color: #d0e0ff; /* soft blue tags */
+  border-radius: 6px;
   font-size: 0.9em;
 }
 
-/* Optional: modal content scroll */
+/* --- OPTIONAL: scroll inside modal --- */
 .modal .modal-content {
-  max-height: 80vh;
   overflow-y: auto;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+  #container {
+    padding: 15px;
+  }
+
+  #results li button.post-button {
+    font-size: 0.95em;
+    padding: 10px 12px;
+  }
+
+  .modal-content {
+    margin: 20px 10px;
+    padding: 20px;
+  }
 }

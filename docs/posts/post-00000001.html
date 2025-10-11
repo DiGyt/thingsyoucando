@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Plant Trees in Paris</title>
+  <link rel="stylesheet" href="../styles/main.css">
+  <style>
+    .post-container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .metadata {
+      margin-bottom: 20px;
+      font-size: 0.9em;
+      color: #555;
+    }
+    .metadata span {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 3px 6px;
+      background: #eee;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Things You Can Do</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+    </nav>
+  </header>
+
+  <div class="post-container">
+    <div class="metadata">
+      <span class="tag country">France</span>
+      <span class="tag time">5 minutes</span>
+      <span class="tag online">Offline</span>
+      <span class="tag capabilities">Ecology</span>
+      <span class="tag capabilities">Law</span>
+      <span class="tag interests">Nature</span>
+      <span class="tag interests">Volunteering</span>
+    </div>
+
+    <div class="content">
+      <p>This is the content of the post. You can write anything in Markdown.</p>
+    </div>
+
+    <script type="application/json" class="metadata-json">
+      {
+        "id": "post-00000001",
+        "title": "Plant Trees in Paris",
+        "country": "France",
+        "time": "5 minutes",
+        "online": false,
+        "capabilities": ["ecology", "law"],
+        "interests": ["nature", "volunteering"]
+      }
+    </script>
+  </div>
+</body>
+</html>

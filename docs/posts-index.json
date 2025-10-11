@@ -1,0 +1,17 @@
+[
+  {
+    "id": "post-00000001",
+    "title": "Plant Trees in Paris",
+    "country": "France",
+    "time": "5 minutes",
+    "online": false,
+    "capabilities": [
+      "ecology",
+      "law"
+    ],
+    "interests": [
+      "nature",
+      "volunteering"
+    ]
+  }
+]

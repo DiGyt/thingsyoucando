@@ -5,13 +5,13 @@
    Global Styles & Typography
 ================================ */
 :root {
-  --primary-color: #1e3a8a;      /* deep blue for header overlay / filter */
-  --primary-light: #3b82f6;      /* lighter blue highlight */
-  --main-bg: rgba(30,58,138,0.85); /* main overlay behind content */
-  --card-bg: rgba(59,130,246,0.8); /* slightly lighter for task cards */
-  --text-color: #f3f4f6;         /* light text for readability */
-  --border-color: #3b82f6;       /* subtle borders */
-  --accent-color: #60a5fa;       /* hover highlight */
+  --primary-color: #1e3a8a;       /* deep blue for header overlay / filter */
+  --primary-light: #3b82f6;       /* lighter blue highlight */
+  --main-bg: rgba(30,58,138,0.88); /* background overlay below header */
+  --card-bg: rgba(59,130,246,0.75); /* card background */
+  --text-color: #f3f4f6;          /* light text for readability */
+  --border-color: #3b82f6;
+  --accent-color: #60a5fa;
   --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -22,16 +22,8 @@ body {
   background-size: cover;
   color: var(--text-color);
   line-height: 1.6;
-}
-
-/* ================================
-   Container
-================================ */
-.container {
-  width: 90%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  position: relative;
+  min-height: 100vh;
 }
 
 /* ================================
@@ -63,6 +55,20 @@ body {
 }
 
 /* ================================
+   Main Content Overlay (blue filter under everything below header)
+================================ */
+.main-content-overlay {
+  background: var(--main-bg);
+  width: 100%;
+  min-height: calc(100vh - 320px);
+  position: relative;
+  top: 0;
+  margin-top: 0;
+  padding-top: 0;
+  box-sizing: border-box;
+}
+
+/* ================================
    Filters (Floating Box)
 ================================ */
 .filters {
@@ -70,8 +76,8 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
   max-width: 900px;
-  margin: -3rem auto 2rem auto;
-  background-color: rgba(30,58,138,0.85); /* slightly darker than header */
+  margin: -3rem auto 2rem auto; /* floats over top of overlay */
+  background-color: rgba(30,58,138,0.85);
   padding: 1rem 2rem;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.25);
@@ -111,28 +117,18 @@ body {
 }
 
 /* ================================
-   Main Content Overlay
-================================ */
-.main-content-overlay {
-  width: 100%;
-  padding: 3rem 0;
-  background-color: var(--main-bg); /* semi-transparent overlay over image below header */
-  display: flex;
-  justify-content: center;
-  z-index: 5;
-}
-
-/* ================================
    Main Content / Things List
 ================================ */
 .things-list {
-  max-width: 800px;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
 }
 
-/* Task Cards */
 .thing-summary {
   background-color: var(--card-bg);
   color: var(--text-color);
@@ -185,7 +181,7 @@ body {
     flex-direction: column;
     padding: 1rem 1rem;
     margin: -2rem auto 2rem auto;
-    gap: 0.5rem; /* reduce vertical spacing */
+    gap: 0.5rem;
   }
 
   .filter-group {

@@ -27,5 +27,10 @@
 
 <script>
   const baseurl = "/thingsyoucando";
+
+  fetch(`${baseurl}/assets/data/things-metadata.json`)
+    .then(r => r.json())
+    .then(data => {
+      // render your items here, same as main.js
+    });
 </script>
-<script src="/thingsyoucando/assets/js/main.js"></script>

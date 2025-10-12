@@ -1,0 +1,28 @@
+body {
+  font-family: sans-serif;
+  margin: 2rem;
+}
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.thing-summary {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  transition: background 0.2s;
+}
+.thing-summary:hover {
+  background: #f5f5f5;
+}
+.thing-detail {
+  padding: 1rem;
+  border-left: 3px solid #4caf50;
+  background: #fafafa;
+  margin-bottom: 1rem;
+}
+iframe {
+  max-width: 100%;
+}

@@ -1,12 +1,15 @@
 {
   "categories": [
+    "Community",
     "Ecology",
     "Volunteering"
   ],
   "country": [
-    "France"
+    "France",
+    "USA"
   ],
   "duration": [
+    "15 minutes",
     "30 minutes"
   ],
   "online": [

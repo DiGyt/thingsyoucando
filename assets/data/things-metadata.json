@@ -1,5 +1,17 @@
 [
   {
+    "id": "donate-clothes",
+    "title": "Donate Clothes",
+    "country": "USA",
+    "duration": "15 minutes",
+    "online": false,
+    "categories": [
+      "Volunteering",
+      "Community"
+    ],
+    "url": "/things/donate-clothes/"
+  },
+  {
     "id": "plant-tree",
     "title": "Plant a Tree",
     "country": "France",

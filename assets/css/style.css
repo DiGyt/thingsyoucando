@@ -2,11 +2,11 @@
    Global Styles & Typography
 ================================ */
 :root {
-  --primary-color: #1e3a8a;      /* deep blue for header / accents */
+  --primary-color: #1e3a8a;      /* deep blue for cards/accents */
   --primary-light: #3b82f6;      /* lighter blue highlights */
-  --secondary-color: #1e40af;    /* rich blue background */
-  --text-color: #f3f4f6;         /* light text on dark blue */
-  --border-color: #3b82f6;       /* subtle border for cards */
+  --secondary-color: #f9fafe;    /* light background behind content */
+  --text-color: #111827;         /* dark text for readability */
+  --border-color: #cbd5e1;       /* soft border for cards */
   --accent-color: #60a5fa;       /* hover highlight */
   --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -21,44 +21,60 @@ body {
 
 .container {
   width: 90%;
-  max-width: 800px; /* center column */
+  max-width: 800px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
 /* ================================
-   Header
+   Header with Hero Image
 ================================ */
 .site-header {
-  background-color: var(--primary-color);
-  color: #fff;
-  padding: 2rem 0;
+  position: relative;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  color: #fff;
+  background: url('{{ site.baseurl }}/assets/images/background.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.header-overlay {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(30,58,138,0.35), rgba(30,58,138,0.75));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .site-header h1 {
-  margin: 0;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 700;
+  margin: 0;
+  color: #fff;
 }
 
 /* ================================
-   Filters
+   Filters (Full-width, soft blue)
 ================================ */
 .filters {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin: 2rem 0;
-  background-color: var(--primary-light);
-  padding: 1rem;
-  border-radius: 8px;
+  margin: -2rem auto 2rem auto; /* pull up toward header */
+  background-color: rgba(59, 130, 246, 0.1);
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .filter-group {
   display: flex;
   flex-direction: column;
-  min-width: 150px;
+  flex: 1 1 150px;
 }
 
 .filter-group label {
@@ -70,8 +86,8 @@ body {
 .filter-group select,
 .filter-group input[type="checkbox"] {
   padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
   font-family: var(--font-sans);
   background-color: #fff;
   color: #111827;
@@ -87,7 +103,7 @@ body {
 }
 
 /* ================================
-   Task List / Thing Cards (Vertical)
+   Task List / Thing Cards (Vertical, Central Column)
 ================================ */
 .things-list {
   display: flex;
@@ -97,31 +113,32 @@ body {
 }
 
 .thing-summary {
-  background-color: var(--primary-color);
+  background-color: #fff;
+  color: var(--text-color);
   padding: 1rem 1.25rem;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid var(--border-color);
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
   font-weight: 600;
   font-size: 1.15rem;
-  color: #f3f4f6;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .thing-summary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
   border-color: var(--accent-color);
 }
 
 .thing-detail {
-  background-color: var(--primary-light);
-  border-left: 4px solid var(--accent-color);
+  background-color: #f0f4ff;
+  border-left: 4px solid var(--primary-light);
   padding: 1rem 1.25rem;
-  border-radius: 0 8px 8px 8px;
+  border-radius: 0 12px 12px 12px;
   margin-top: 0.5rem;
   animation: fadeIn 0.2s ease;
-  color: #f3f4f6;
+  color: var(--text-color);
 }
 
 .thing-detail img,
@@ -142,30 +159,25 @@ body {
 /* ================================
    Responsive
 ================================ */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .filters {
     flex-direction: column;
+    padding: 1rem 1rem;
   }
+}
 
-  .filter-group {
-    width: 100%;
-  }
-
-  .thing-summary {
-    font-size: 1rem;
-  }
-
+@media (max-width: 768px) {
   .site-header h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .site-header h1 {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 
   .thing-summary {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 }

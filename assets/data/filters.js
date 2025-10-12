@@ -1,24 +1,22 @@
-<script>
-  const filtersData = {
-    categories: [
+const filtersData = {
+  categories: [
   "Community",
   "Ecology",
   "Movement",
   "Volunteering"
 ],
-    country: [
+  country: [
   "France",
   "Spain",
   "USA"
 ],
-    duration: [
+  duration: [
   "15 minutes",
   "2 hours",
   "30 minutes"
 ],
-    online: [
+  online: [
   true,
   false
 ]
-  };
-</script>
+};

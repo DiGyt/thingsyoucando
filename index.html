@@ -8,25 +8,20 @@
 <body>
 
 <div id="filters" class="filters">
+  <!-- Dynamic filters (populated by JS) -->
   <select id="filter-country">
     <option value="">All Countries</option>
-    <option>France</option>
-    <option>USA</option>
   </select>
 
   <select id="filter-duration">
     <option value="">All Durations</option>
-    <option>5 minutes</option>
-    <option>30 minutes</option>
   </select>
 
   <label><input type="checkbox" id="filter-online"> Online only</label>
 
   <fieldset id="filter-categories">
     <legend>Categories:</legend>
-    <label><input type="checkbox" value="Ecology"> Ecology</label>
-    <label><input type="checkbox" value="Law"> Law</label>
-    <label><input type="checkbox" value="Volunteering"> Volunteering</label>
+    <!-- JS dynamically adds category checkboxes here -->
   </fieldset>
 </div>
 

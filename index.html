@@ -41,11 +41,13 @@
   </fieldset>
 </div>
 
-<!-- Full-width main content overlay -->
-<div class="things-list-wrapper">
-  <main id="things-list" class="things-list container">
-    <!-- JS populates this list -->
-  </main>
+<!-- Full-width overlay behind main content -->
+<div class="things-background-overlay">
+  <div class="things-list-wrapper">
+    <main id="things-list" class="things-list container">
+      <!-- JS populates this list -->
+    </main>
+  </div>
 </div>
 
 <!-- Pass baseurl to JS -->
@@ -53,7 +55,7 @@
   const baseurl = "/thingsyoucando";
 </script>
 
-<!-- Load precomputed filters (built at build time) -->
+<!-- Load precomputed filters -->
 <script src="/thingsyoucando/assets/data/filters.js"></script>
 
 <!-- Load main JS -->

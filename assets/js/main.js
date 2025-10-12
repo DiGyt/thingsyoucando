@@ -20,13 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
       filters.country.appendChild(opt);
     });
 
-    // Duration dropdown
-    filtersData.duration.forEach(d => {
-      const opt = document.createElement('option');
-      opt.value = d;
-      opt.textContent = d;
-      filters.duration.appendChild(opt);
-    });
+    // Duration dropdown sorted ascending (smaller first)
+    filtersData.duration
+      .sort((a, b) => parseDuration(a) - parseDuration(b))
+      .forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = d;
+        opt.textContent = d;
+        filters.duration.appendChild(opt);
+      });
 
     // Category checkboxes
     filtersData.categories.forEach(cat => {
@@ -66,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Online only
     if (filters.online.checked && !item.online) return false;
 
-    // Categories OR
+    // Categories OR (inclusive)
     const selectedCats = filters.categories.filter(c => c.checked).map(c => c.value);
     if (selectedCats.length && !selectedCats.some(c => item.categories.includes(c))) return false;
 

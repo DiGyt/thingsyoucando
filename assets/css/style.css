@@ -2,18 +2,18 @@
    Global Styles & Typography
 ================================ */
 :root {
-  --primary-color: #1e3a8a;   /* deep blue for credibility */
-  --primary-light: #3b82f6;   /* lighter blue highlights */
-  --secondary-color: #f3f4f6; /* neutral light gray background */
-  --text-color: #111827;      /* dark gray for readability */
-  --border-color: #d1d5db;    /* soft border for boxes */
-  --accent-color: #2563eb;    /* vibrant blue for hover/focus */
-  --font-serif: "Merriweather", serif;
+  --primary-color: #1e3a8a;      /* deep blue for header / accents */
+  --primary-light: #3b82f6;      /* lighter blue highlights */
+  --secondary-color: #1e40af;    /* rich blue background */
+  --text-color: #f3f4f6;         /* light text on dark blue */
+  --border-color: #3b82f6;       /* subtle border for cards */
+  --accent-color: #60a5fa;       /* hover highlight */
+  --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
   margin: 0;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   background-color: var(--secondary-color);
   color: var(--text-color);
   line-height: 1.6;
@@ -21,8 +21,9 @@ body {
 
 .container {
   width: 90%;
-  max-width: 1200px;
+  max-width: 800px; /* center column */
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 /* ================================
@@ -49,10 +50,9 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
   margin: 2rem 0;
-  background: #fff;
+  background-color: var(--primary-light);
   padding: 1rem;
   border-radius: 8px;
-  border: 1px solid var(--border-color);
 }
 
 .filter-group {
@@ -71,8 +71,10 @@ body {
 .filter-group input[type="checkbox"] {
   padding: 0.5rem;
   border-radius: 6px;
-  border: 1px solid var(--border-color);
-  font-family: var(--font-serif);
+  border: 1px solid var(--accent-color);
+  font-family: var(--font-sans);
+  background-color: #fff;
+  color: #111827;
 }
 
 /* Category checkboxes inline */
@@ -85,39 +87,41 @@ body {
 }
 
 /* ================================
-   Task List / Thing Cards
+   Task List / Thing Cards (Vertical)
 ================================ */
 .things-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
   margin-bottom: 3rem;
 }
 
 .thing-summary {
-  background-color: #fff;
+  background-color: var(--primary-color);
   padding: 1rem 1.25rem;
   border-radius: 8px;
   border: 1px solid var(--border-color);
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  color: #f3f4f6;
 }
 
 .thing-summary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border-color: var(--accent-color);
 }
 
 .thing-detail {
-  background-color: #ffffff;
-  border-left: 4px solid var(--primary-light);
+  background-color: var(--primary-light);
+  border-left: 4px solid var(--accent-color);
   padding: 1rem 1.25rem;
   border-radius: 0 8px 8px 8px;
-  margin-bottom: 1.5rem;
+  margin-top: 0.5rem;
   animation: fadeIn 0.2s ease;
+  color: #f3f4f6;
 }
 
 .thing-detail img,

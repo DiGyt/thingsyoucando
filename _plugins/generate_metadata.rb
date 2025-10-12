@@ -29,14 +29,12 @@ Jekyll::Hooks.register :site, :post_write do |site|
   all_online     = [true, false]  # or you could compute dynamically if needed
 
   filters_js = <<~JS
-    <script>
-      const filtersData = {
-        categories: #{JSON.pretty_generate(all_categories)},
-        country: #{JSON.pretty_generate(all_countries)},
-        duration: #{JSON.pretty_generate(all_durations)},
-        online: #{JSON.pretty_generate(all_online)}
-      };
-    </script>
+    const filtersData = {
+      categories: #{JSON.pretty_generate(all_categories)},
+      country: #{JSON.pretty_generate(all_countries)},
+      duration: #{JSON.pretty_generate(all_durations)},
+      online: #{JSON.pretty_generate(all_online)}
+    };
   JS
 
   File.open(File.join(site.dest, 'assets', 'data', 'filters.js'), 'w') do |f|

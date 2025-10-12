@@ -3,10 +3,10 @@ name: Build and Deploy Jekyll
 on:
   push:
     branches:
-      - main  # or your default branch
+      - jekyll  # or your default branch
   pull_request:
     branches:
-      - main
+      - jekyll
 
 jobs:
   build-deploy:

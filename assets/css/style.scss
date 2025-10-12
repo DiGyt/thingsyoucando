@@ -1,14 +1,11 @@
 ---
 ---
 
-/* ================================
-   Global Styles & Typography
-================================ */
 :root {
-  --primary-color: #1e3a8a;
-  --primary-light: #3b82f6;
-  --main-bg: rgba(30,58,138,0.6);
-  --card-bg: rgba(59,130,246,0.8);
+  --primary-color: #1e3a8a;       /* header/filter overlay */
+  --primary-light: #3b82f6;       /* lighter highlight */
+  --main-bg: rgba(30,58,138,0.6); /* main content overlay */
+  --card-bg: rgba(30,58,138,0.85); /* same as filter */
   --text-color: #f3f4f6;
   --border-color: #3b82f6;
   --accent-color: #60a5fa;
@@ -24,9 +21,6 @@ body {
   line-height: 1.6;
 }
 
-/* ================================
-   Container
-================================ */
 .container {
   width: 90%;
   max-width: 800px;
@@ -71,7 +65,7 @@ body {
   gap: 1rem;
   max-width: 900px;
   margin: -3rem auto 2rem auto;
-  background-color: rgba(30,58,138,0.85);
+  background-color: var(--card-bg); /* same color as cards */
   padding: 1rem 2rem;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.25);
@@ -110,12 +104,12 @@ body {
 }
 
 /* ================================
-   Things List Wrapper (full-width overlay)
+   Full-width main content overlay
 ================================ */
 .things-list-wrapper {
   width: 100%;
-  padding: 2rem 0;
-  background-color: var(--main-bg);
+  background-color: var(--main-bg); /* slightly lighter overlay than filters */
+  padding: 5rem 0 2rem 0; /* top padding ensures items don't collide with floating filters */
 }
 
 /* ================================
@@ -131,7 +125,7 @@ body {
 
 /* Task Cards */
 .thing-summary {
-  background-color: var(--card-bg);
+  background-color: var(--card-bg); /* same as filters */
   color: var(--text-color);
   padding: 1rem 1.25rem;
   border-radius: 12px;
@@ -194,7 +188,7 @@ body {
   .site-header h1 {
     font-size: 2.5rem;
   }
-} /* <-- closing brace added here */
+}
 
 @media (max-width: 480px) {
   .site-header h1 {

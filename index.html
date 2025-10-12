@@ -19,34 +19,34 @@ layout: default
   </div>
 </header>
 
-<!-- Floating filters box -->
-<div id="filters" class="filters container">
-  <div class="filter-group">
-    <label for="filter-country">Country:</label>
-    <select id="filter-country">
-      <option value="">All Countries</option>
-    </select>
-  </div>
-
-  <div class="filter-group">
-    <label for="filter-duration">Duration:</label>
-    <select id="filter-duration">
-      <option value="">All Durations</option>
-    </select>
-  </div>
-
-  <div class="filter-group">
-    <label><input type="checkbox" id="filter-online"> Online only</label>
-  </div>
-
-  <fieldset id="filter-categories" class="filter-group">
-    <legend>Categories:</legend>
-    <!-- JS dynamically adds category checkboxes here -->
-  </fieldset>
-</div>
-
-<!-- Full-width overlay behind main content -->
+<!-- Main content overlay behind everything below the header -->
 <div class="main-content-overlay">
+  <!-- Floating filters box -->
+  <div id="filters" class="filters container">
+    <div class="filter-group">
+      <label for="filter-country">Country:</label>
+      <select id="filter-country">
+        <option value="">All Countries</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="filter-duration">Duration:</label>
+      <select id="filter-duration">
+        <option value="">All Durations</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label><input type="checkbox" id="filter-online"> Online only</label>
+    </div>
+
+    <fieldset id="filter-categories" class="filter-group">
+      <legend>Categories:</legend>
+      <!-- JS dynamically adds category checkboxes here -->
+    </fieldset>
+  </div>
+
   <main id="things-list" class="things-list container">
     <!-- JS populates this list -->
   </main>

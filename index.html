@@ -8,7 +8,7 @@
 <body>
 
 <div id="filters" class="filters">
-  <!-- Dynamic filters (populated by JS) -->
+  <!-- Dynamic filters (populated by JS from filtersData) -->
   <select id="filter-country">
     <option value="">All Countries</option>
   </select>
@@ -33,6 +33,9 @@
 <script>
   const baseurl = "/thingsyoucando";
 </script>
+
+<!-- Load precomputed filters (built at build time) -->
+<script src="/thingsyoucando/assets/data/filters.js"></script>
 
 <!-- Load main JS -->
 <script src="/thingsyoucando/assets/js/main.js"></script>

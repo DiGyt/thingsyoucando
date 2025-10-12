@@ -3,7 +3,7 @@ name: Build and Deploy Jekyll
 on:
   push:
     branches:
-      - jekyll  # or your default branch
+      - jekyll
   pull_request:
     branches:
       - jekyll
@@ -13,22 +13,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout the repo
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      # 2. Setup Ruby environment
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2  # match your local version
+          ruby-version: 3.2
 
+      # 3. Install bundler and gems from Gemfile
       - name: Install Jekyll & Bundler
         run: |
           gem install bundler
           bundle install
 
+      # 4. Build the Jekyll site (runs your _plugins/generate_metadata.rb)
       - name: Build Jekyll site
         run: bundle exec jekyll build
 
+      # 5. Deploy built site to gh-pages branch
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4.0.0
         with:

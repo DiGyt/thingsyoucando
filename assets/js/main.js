@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.thing-detail').forEach(d => d.remove());
 
     // Load the full post HTML (rendered by Jekyll)
-    const res = await fetch(item.url);
+    const res = await fetch(`${baseurl}${item.url}`);
     const html = await res.text();
 
     // Extract main article content (basic method)

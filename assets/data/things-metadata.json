@@ -1,5 +1,18 @@
 [
   {
+    "id": "beach-cleanup",
+    "title": "Beach Cleanup",
+    "country": "Spain",
+    "duration": "2 hours",
+    "online": false,
+    "categories": [
+      "Ecology",
+      "Volunteering",
+      "Movement"
+    ],
+    "url": "/things/beach-cleanup/"
+  },
+  {
     "id": "donate-clothes",
     "title": "Donate Clothes",
     "country": "USA",

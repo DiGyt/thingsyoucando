@@ -1,0 +1,15 @@
+title: "Things You Can Do"
+baseurl: ""
+url: "https://yourusername.github.io/thingsyoucando"
+
+collections:
+  things:
+    output: true
+    permalink: /things/:slug/
+
+# Optional build settings
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - README.md

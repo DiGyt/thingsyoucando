@@ -31,5 +31,10 @@ layout: default
 
 <script>
   const baseurl = "{{ site.baseurl }}";
+
+  fetch(`${baseurl}/assets/data/things-metadata.json`)
+    .then(r => r.json())
+    .then(data => {
+      // render your items here, same as main.js
+    });
 </script>
-<script src="{{ site.baseurl }}/assets/js/main.js"></script>

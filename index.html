@@ -45,21 +45,16 @@ layout: default
   </fieldset>
 </div>
 
-<!-- Full-width overlay behind main content -->
-<div class="things-background-overlay">
-  <div class="things-list-wrapper">
-    <main id="things-list" class="things-list container">
-      <!-- JS populates this list -->
-    </main>
-  </div>
-</div>
+<main id="things-list" class="things-list container">
+  <!-- JS populates this list -->
+</main>
 
 <!-- Pass baseurl to JS -->
 <script>
   const baseurl = "{{ site.baseurl }}";
 </script>
 
-<!-- Load precomputed filters -->
+<!-- Load precomputed filters (built at build time) -->
 <script src="{{ site.baseurl }}/assets/data/filters.js"></script>
 
 <!-- Load main JS -->

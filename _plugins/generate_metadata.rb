@@ -2,6 +2,7 @@ require 'json'
 require 'fileutils'
 
 Jekyll::Hooks.register :site, :post_write do |site|
+  # Collect metadata for each thing
   things = site.collections['things'].docs.map do |doc|
     {
       id: doc.data['slug'] || doc.basename_without_ext,
@@ -21,20 +22,24 @@ Jekyll::Hooks.register :site, :post_write do |site|
     f.write(JSON.pretty_generate(things))
   end
 
-  # Generate dynamic filters
+  # Generate dynamic filters from metadata
   all_categories = things.flat_map { |t| t[:categories] }.uniq.sort
   all_countries  = things.map { |t| t[:country] }.uniq.sort
   all_durations  = things.map { |t| t[:duration] }.uniq.sort
-  all_online     = [true, false]  # You can optionally filter based on which values exist
+  all_online     = [true, false]  # or you could compute dynamically if needed
 
-  filters = {
-    'categories' => all_categories,
-    'country'    => all_countries,
-    'duration'   => all_durations,
-    'online'     => all_online
-  }
+  filters_js = <<~JS
+    <script>
+      const filtersData = {
+        categories: #{JSON.pretty_generate(all_categories)},
+        country: #{JSON.pretty_generate(all_countries)},
+        duration: #{JSON.pretty_generate(all_durations)},
+        online: #{JSON.pretty_generate(all_online)}
+      };
+    </script>
+  JS
 
-  File.open(File.join(data_dir, 'things-filters.json'), 'w') do |f|
-    f.write(JSON.pretty_generate(filters))
+  File.open(File.join(site.dest, 'assets', 'data', 'filters.js'), 'w') do |f|
+    f.write(filters_js)
   end
 end

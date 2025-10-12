@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let items = [];
 
-  fetch('/assets/data/things-metadata.json')
+  fetch('assets/data/things-metadata.json')
     .then(r => r.json())
     .then(data => {
       items = data;

@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Things You Can Do</title>
+  <link rel="stylesheet" href="/thingsyoucando/assets/css/styles.css">
+</head>
+<body>
+
 <div id="filters" class="filters">
   <select id="filter-country">
     <option value="">All Countries</option>
@@ -25,12 +34,13 @@
   <!-- JS populates this list -->
 </div>
 
+<!-- Pass baseurl to JS -->
 <script>
   const baseurl = "/thingsyoucando";
-
-  fetch(`${baseurl}/assets/data/things-metadata.json`)
-    .then(r => r.json())
-    .then(data => {
-      // render your items here, same as main.js
-    });
 </script>
+
+<!-- Load main JS -->
+<script src="/thingsyoucando/assets/js/main.js"></script>
+
+</body>
+</html>

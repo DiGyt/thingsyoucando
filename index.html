@@ -7,6 +7,9 @@
 </head>
 <body>
 
+<!-- Global dark overlay behind everything -->
+<div class="page-overlay"></div>
+
 <header class="site-header">
   <div class="header-overlay">
     <div class="container">
@@ -15,38 +18,35 @@
   </div>
 </header>
 
-<!-- Main content overlay behind everything below the header -->
-<div class="main-content-overlay">
-  <!-- Floating filters box -->
-  <div id="filters" class="filters container">
-    <div class="filter-group">
-      <label for="filter-country">Country:</label>
-      <select id="filter-country">
-        <option value="">All Countries</option>
-      </select>
-    </div>
-
-    <div class="filter-group">
-      <label for="filter-duration">Duration:</label>
-      <select id="filter-duration">
-        <option value="">All Durations</option>
-      </select>
-    </div>
-
-    <div class="filter-group">
-      <label><input type="checkbox" id="filter-online"> Online only</label>
-    </div>
-
-    <fieldset id="filter-categories" class="filter-group">
-      <legend>Categories:</legend>
-      <!-- JS dynamically adds category checkboxes here -->
-    </fieldset>
+<!-- Floating filters box -->
+<div id="filters" class="filters container">
+  <div class="filter-group">
+    <label for="filter-country">Country:</label>
+    <select id="filter-country">
+      <option value="">All Countries</option>
+    </select>
   </div>
 
-  <main id="things-list" class="things-list container">
-    <!-- JS populates this list -->
-  </main>
+  <div class="filter-group">
+    <label for="filter-duration">Duration:</label>
+    <select id="filter-duration">
+      <option value="">All Durations</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label><input type="checkbox" id="filter-online"> Online only</label>
+  </div>
+
+  <fieldset id="filter-categories" class="filter-group">
+    <legend>Categories:</legend>
+    <!-- JS dynamically adds category checkboxes here -->
+  </fieldset>
 </div>
+
+<main id="things-list" class="things-list container">
+  <!-- JS populates this list -->
+</main>
 
 <!-- Pass baseurl to JS -->
 <script>

@@ -55,24 +55,24 @@ document.addEventListener('DOMContentLoaded', () => {
   function matchesFilters(item) {
     // Country exact match
     if (filters.country.value && item.country !== filters.country.value) return false;
-  
+
     // Duration: allow smaller or equal
     if (filters.duration.value) {
       const filterMinutes = parseDuration(filters.duration.value);
       const itemMinutes = parseDuration(item.duration);
       if (itemMinutes > filterMinutes) return false;
     }
-  
+
     // Online only
     if (filters.online.checked && !item.online) return false;
-  
+
     // Categories OR
     const selectedCats = filters.categories.filter(c => c.checked).map(c => c.value);
     if (selectedCats.length && !selectedCats.some(c => item.categories.includes(c))) return false;
-  
+
     return true;
   }
-  
+
   // Helper function to convert durations to minutes
   function parseDuration(durationStr) {
     if (!durationStr) return Infinity;
@@ -81,6 +81,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (unit.startsWith('hour')) return num * 60;
     return num; // assume minutes
   }
+
+  // --- Render visible items ---
+  function renderList() {
+    listContainer.innerHTML = '';
+    const visible = items.filter(matchesFilters);
+    visible.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'thing-summary';
+      div.textContent = item.title;
+      div.dataset.id = item.id;
+
+      div.addEventListener('click', () => toggleExpand(div, item));
+      listContainer.appendChild(div);
+    });
+  }
+
+  // --- Expand/collapse item details ---
+  async function toggleExpand(div, item) {
+    const existing = div.nextElementSibling;
+    if (existing && existing.classList.contains('thing-detail')) {
+      existing.remove();
+      return;
+    }
 
     // Collapse any other open detail
     document.querySelectorAll('.thing-detail').forEach(d => d.remove());

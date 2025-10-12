@@ -53,36 +53,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Filtering function ---
   function matchesFilters(item) {
+    // Country exact match
     if (filters.country.value && item.country !== filters.country.value) return false;
-    if (filters.duration.value && item.duration !== filters.duration.value) return false;
+  
+    // Duration: allow smaller or equal
+    if (filters.duration.value) {
+      const filterMinutes = parseDuration(filters.duration.value);
+      const itemMinutes = parseDuration(item.duration);
+      if (itemMinutes > filterMinutes) return false;
+    }
+  
+    // Online only
     if (filters.online.checked && !item.online) return false;
+  
+    // Categories OR
     const selectedCats = filters.categories.filter(c => c.checked).map(c => c.value);
-    if (selectedCats.length && !selectedCats.every(c => item.categories.includes(c))) return false;
+    if (selectedCats.length && !selectedCats.some(c => item.categories.includes(c))) return false;
+  
     return true;
   }
-
-  // --- Render visible items ---
-  function renderList() {
-    listContainer.innerHTML = '';
-    const visible = items.filter(matchesFilters);
-    visible.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'thing-summary';
-      div.textContent = item.title;
-      div.dataset.id = item.id;
-
-      div.addEventListener('click', () => toggleExpand(div, item));
-      listContainer.appendChild(div);
-    });
+  
+  // Helper function to convert durations to minutes
+  function parseDuration(durationStr) {
+    if (!durationStr) return Infinity;
+    const [value, unit] = durationStr.split(' ');
+    const num = parseFloat(value);
+    if (unit.startsWith('hour')) return num * 60;
+    return num; // assume minutes
   }
-
-  // --- Expand/collapse item details ---
-  async function toggleExpand(div, item) {
-    const existing = div.nextElementSibling;
-    if (existing && existing.classList.contains('thing-detail')) {
-      existing.remove();
-      return;
-    }
 
     // Collapse any other open detail
     document.querySelectorAll('.thing-detail').forEach(d => d.remove());

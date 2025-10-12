@@ -7,27 +7,41 @@
 </head>
 <body>
 
-<div id="filters" class="filters">
+<header class="site-header">
+  <div class="container">
+    <h1>Things You Can Do</h1>
+  </div>
+</header>
+
+<div id="filters" class="filters container">
   <!-- Dynamic filters (populated by JS from filtersData) -->
-  <select id="filter-country">
-    <option value="">All Countries</option>
-  </select>
+  <div class="filter-group">
+    <label for="filter-country">Country:</label>
+    <select id="filter-country">
+      <option value="">All Countries</option>
+    </select>
+  </div>
 
-  <select id="filter-duration">
-    <option value="">All Durations</option>
-  </select>
+  <div class="filter-group">
+    <label for="filter-duration">Duration:</label>
+    <select id="filter-duration">
+      <option value="">All Durations</option>
+    </select>
+  </div>
 
-  <label><input type="checkbox" id="filter-online"> Online only</label>
+  <div class="filter-group">
+    <label><input type="checkbox" id="filter-online"> Online only</label>
+  </div>
 
-  <fieldset id="filter-categories">
+  <fieldset id="filter-categories" class="filter-group">
     <legend>Categories:</legend>
     <!-- JS dynamically adds category checkboxes here -->
   </fieldset>
 </div>
 
-<div id="things-list" class="things-list">
+<main id="things-list" class="things-list container">
   <!-- JS populates this list -->
-</div>
+</main>
 
 <!-- Pass baseurl to JS -->
 <script>

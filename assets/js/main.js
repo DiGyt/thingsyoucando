@@ -4,11 +4,46 @@ document.addEventListener('DOMContentLoaded', () => {
     country: document.getElementById('filter-country'),
     duration: document.getElementById('filter-duration'),
     online: document.getElementById('filter-online'),
-    categories: Array.from(document.querySelectorAll('#filter-categories input[type=checkbox]')),
+    categoriesContainer: document.getElementById('filter-categories'),
+    categories: [] // will populate after checkboxes are added
   };
 
   let items = [];
 
+  // --- Populate filter options from filtersData ---
+  if (typeof filtersData !== 'undefined') {
+    // Country dropdown
+    filtersData.country.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = c;
+      filters.country.appendChild(opt);
+    });
+
+    // Duration dropdown
+    filtersData.duration.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d;
+      opt.textContent = d;
+      filters.duration.appendChild(opt);
+    });
+
+    // Category checkboxes
+    filtersData.categories.forEach(cat => {
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.value = cat;
+      label.appendChild(input);
+      label.append(` ${cat}`);
+      filters.categoriesContainer.appendChild(label);
+    });
+
+    // Update categories array after adding checkboxes
+    filters.categories = Array.from(filters.categoriesContainer.querySelectorAll('input[type=checkbox]'));
+  }
+
+  // --- Fetch items metadata ---
   fetch(`${baseurl}/assets/data/things-metadata.json`)
     .then(r => r.json())
     .then(data => {
@@ -16,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
       renderList();
     });
 
+  // --- Filtering function ---
   function matchesFilters(item) {
     if (filters.country.value && item.country !== filters.country.value) return false;
     if (filters.duration.value && item.duration !== filters.duration.value) return false;
@@ -25,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
+  // --- Render visible items ---
   function renderList() {
     listContainer.innerHTML = '';
     const visible = items.filter(matchesFilters);
@@ -39,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Expand/collapse item details ---
   async function toggleExpand(div, item) {
     const existing = div.nextElementSibling;
     if (existing && existing.classList.contains('thing-detail')) {
@@ -53,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const res = await fetch(`${baseurl}${item.url}`);
     const html = await res.text();
 
-    // Extract main article content (basic method)
+    // Extract main article content
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     const article = doc.querySelector('main, article, body');
@@ -65,9 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
     div.insertAdjacentElement('afterend', detail);
   }
 
-  // Add event listeners
-  Object.values(filters).forEach(f => {
-    if (Array.isArray(f)) f.forEach(c => c.addEventListener('change', renderList));
-    else f.addEventListener('change', renderList);
-  });
+  // --- Add event listeners for filters ---
+  filters.country.addEventListener('change', renderList);
+  filters.duration.addEventListener('change', renderList);
+  filters.online.addEventListener('change', renderList);
+  filters.categories.forEach(c => c.addEventListener('change', renderList));
 });

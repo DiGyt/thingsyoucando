@@ -1,0 +1,16 @@
+{
+  "categories": [
+    "Ecology",
+    "Volunteering"
+  ],
+  "country": [
+    "France"
+  ],
+  "duration": [
+    "30 minutes"
+  ],
+  "online": [
+    true,
+    false
+  ]
+}

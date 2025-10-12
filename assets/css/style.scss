@@ -5,13 +5,13 @@
    Global Styles & Typography
 ================================ */
 :root {
-  --primary-color: #1e3a8a;
-  --primary-light: #3b82f6;
-  --main-bg: rgba(30,58,138,0.6);
-  --card-bg: rgba(59,130,246,0.8);
-  --text-color: #f3f4f6;
-  --border-color: #3b82f6;
-  --accent-color: #60a5fa;
+  --primary-color: #1e3a8a;      /* deep blue for header overlay / filter */
+  --primary-light: #3b82f6;      /* lighter blue highlight */
+  --main-bg: rgba(59,130,246,0.6); /* task card color, also main content background */
+  --card-bg: rgba(59,130,246,0.8); /* slightly lighter for cards */
+  --text-color: #f3f4f6;         /* light text for readability */
+  --border-color: #3b82f6;       /* subtle borders */
+  --accent-color: #60a5fa;       /* hover highlight */
   --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -49,7 +49,7 @@ body {
 .header-overlay {
   width: 100%;
   height: 100%;
-  background: rgba(30,58,138,0.5);
+  background: rgba(30,58,138,0.5); /* lighter blue overlay */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,7 +71,7 @@ body {
   gap: 1rem;
   max-width: 900px;
   margin: -3rem auto 2rem auto;
-  background-color: rgba(30,58,138,0.85);
+  background-color: rgba(30,58,138,0.85); /* slightly darker than header */
   padding: 1rem 2rem;
   border-radius: 12px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.25);
@@ -101,6 +101,7 @@ body {
   color: #111827;
 }
 
+/* Category checkboxes inline */
 #filter-categories label {
   display: inline-flex;
   align-items: center;
@@ -110,23 +111,17 @@ body {
 }
 
 /* ================================
-   Things List Wrapper (full-width overlay)
-================================ */
-.things-list-wrapper {
-  width: 100%;
-  padding: 2rem 0;
-  background-color: var(--main-bg);
-}
-
-/* ================================
    Main Content / Things List
 ================================ */
 .things-list {
-  max-width: 800px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background-color: var(--main-bg); /* same color as task cards */
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
 }
 
 /* Task Cards */
@@ -182,7 +177,7 @@ body {
     flex-direction: column;
     padding: 1rem 1rem;
     margin: -2rem auto 2rem auto;
-    gap: 0.5rem;
+    gap: 0.5rem; /* reduce vertical spacing */
   }
 
   .filter-group {
@@ -194,7 +189,7 @@ body {
   .site-header h1 {
     font-size: 2.5rem;
   }
-} /* <-- closing brace added here */
+}
 
 @media (max-width: 480px) {
   .site-header h1 {

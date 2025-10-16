@@ -4,6 +4,9 @@ country: "France"
 duration: "30 minutes"
 online: false
 categories: ["Ecology", "Volunteering"]
+geo_restricted: true # or false
+lat: 48.86
+lng: 2.35
 thumbnail: "/assets/images/plant-tree.jpg"
 ---
 

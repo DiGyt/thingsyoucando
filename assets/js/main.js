@@ -5,10 +5,16 @@ document.addEventListener('DOMContentLoaded', () => {
     duration: document.getElementById('filter-duration'),
     online: document.getElementById('filter-online'),
     categoriesContainer: document.getElementById('filter-categories'),
-    categories: [] // will populate after checkboxes are added
+    categories: [], // will populate after checkboxes are added
+    localCheckbox: document.getElementById('filter-local'),
+    localLocation: document.getElementById('local-search-location'),
+    localRadius: document.getElementById('local-search-radius')
   };
 
   let items = [];
+  let userLat = null;
+  let userLng = null;
+  let radiusKm = null;
 
   // --- Populate filter options from filtersData ---
   if (typeof filtersData !== 'undefined') {
@@ -20,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
       filters.country.appendChild(opt);
     });
 
-    // Duration dropdown sorted ascending (smaller first)
+    // Duration dropdown sorted ascending
     filtersData.duration
       .sort((a, b) => parseDuration(a) - parseDuration(b))
       .forEach(d => {
@@ -41,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
       filters.categoriesContainer.appendChild(label);
     });
 
-    // Update categories array after adding checkboxes
     filters.categories = Array.from(filters.categoriesContainer.querySelectorAll('input[type=checkbox]'));
   }
 
@@ -52,6 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
       items = data;
       renderList();
     });
+
+  // --- Haversine distance ---
+  function distanceKm(lat1, lng1, lat2, lng2) {
+    const R = 6371; // Earth radius in km
+    const dLat = deg2rad(lat2 - lat1);
+    const dLng = deg2rad(lng2 - lng1);
+    const a =
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+      Math.sin(dLng/2) * Math.sin(dLng/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  }
+
+  function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+  }
 
   // --- Filtering function ---
   function matchesFilters(item) {
@@ -72,16 +94,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedCats = filters.categories.filter(c => c.checked).map(c => c.value);
     if (selectedCats.length && !selectedCats.some(c => item.categories.includes(c))) return false;
 
+    // Geo filtering
+    if (filters.localCheckbox.checked && userLat !== null && userLng !== null && radiusKm !== null) {
+      if (item.geo_restricted) {
+        if (typeof item.lat !== 'number' || typeof item.lng !== 'number') return false;
+        const d = distanceKm(userLat, userLng, item.lat, item.lng);
+        if (d > radiusKm) return false;
+      }
+      // Non-geo-restricted items are always included
+    }
+
     return true;
   }
 
-  // Helper function to convert durations to minutes
+  // --- Parse duration helper ---
   function parseDuration(durationStr) {
     if (!durationStr) return Infinity;
     const [value, unit] = durationStr.split(' ');
     const num = parseFloat(value);
     if (unit.startsWith('hour')) return num * 60;
-    return num; // assume minutes
+    return num;
   }
 
   // --- Render visible items ---
@@ -107,14 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Collapse any other open detail
     document.querySelectorAll('.thing-detail').forEach(d => d.remove());
 
-    // Load the full post HTML (rendered by Jekyll)
     const res = await fetch(`${baseurl}${item.url}`);
     const html = await res.text();
 
-    // Extract main article content
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     const article = doc.querySelector('main, article, body');
@@ -126,9 +155,52 @@ document.addEventListener('DOMContentLoaded', () => {
     div.insertAdjacentElement('afterend', detail);
   }
 
+  // --- Local search listener (geocode via Nominatim) ---
+  filters.localCheckbox.addEventListener('change', async () => {
+    if (!filters.localCheckbox.checked) {
+      userLat = null;
+      userLng = null;
+      radiusKm = null;
+      renderList();
+      return;
+    }
+
+    const location = filters.localLocation.value.trim();
+    if (!location) {
+      alert('Please enter a location to search locally.');
+      filters.localCheckbox.checked = false;
+      return;
+    }
+
+    radiusKm = parseFloat(filters.localRadius.value);
+
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`);
+      const data = await response.json();
+      if (data.length === 0) {
+        alert('Location not found.');
+        filters.localCheckbox.checked = false;
+        return;
+      }
+      userLat = parseFloat(data[0].lat);
+      userLng = parseFloat(data[0].lon);
+      renderList();
+    } catch (err) {
+      console.error('Error fetching location:', err);
+      alert('Failed to get location.');
+      filters.localCheckbox.checked = false;
+    }
+  });
+
   // --- Add event listeners for filters ---
   filters.country.addEventListener('change', renderList);
   filters.duration.addEventListener('change', renderList);
   filters.online.addEventListener('change', renderList);
   filters.categories.forEach(c => c.addEventListener('change', renderList));
+  filters.localRadius.addEventListener('change', () => {
+    if (filters.localCheckbox.checked) filters.localCheckbox.dispatchEvent(new Event('change'));
+  });
+  filters.localLocation.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter' && filters.localCheckbox.checked) filters.localCheckbox.dispatchEvent(new Event('change'));
+  });
 });

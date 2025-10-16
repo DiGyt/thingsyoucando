@@ -9,59 +9,10 @@ layout: default
   <title>Things You Can Do</title>
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
   <style>
-    /* --- Local search settings: compact box --- */
+    /* Simple hidden toggle for local search inputs */
     #local-search-settings {
       display: none;
-      position: absolute; /* float independently */
-      background: white;
-      padding: 0.5em;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      margin-top: 0.25em;
-      z-index: 1000;
-      width: 220px;
-    }
-
-    #local-search-settings label,
-    #local-search-settings input,
-    #local-search-settings select,
-    #local-search-settings button {
-      display: block;
-      width: 100%;
-      margin: 0.25em 0;
-    }
-
-    /* Suggestions dropdown: independent floating box */
-    #local-search-suggestions {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      max-height: 200px;
-      overflow-y: auto;
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 0 0 5px 5px;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      z-index: 2000;
-      display: none; /* hidden by default */
-    }
-
-    #local-search-suggestions li {
-      padding: 0.25em 0.5em;
-      cursor: pointer;
-    }
-
-    #local-search-suggestions li:hover {
-      background-color: #f0f0f0;
-    }
-
-    /* Positioning wrapper relative to checkbox */
-    .filter-group.local-wrapper {
-      position: relative;
+      margin-top: 0.5em;
     }
   </style>
 </head>
@@ -103,31 +54,32 @@ layout: default
     <!-- JS dynamically adds category checkboxes here -->
   </fieldset>
 
-  <!-- Local search toggle + wrapper -->
-  <div class="filter-group local-wrapper">
+  <!-- Local search toggle -->
+  <div class="filter-group">
     <label><input type="checkbox" id="filter-local"> Search locally</label>
+  </div>
 
-    <!-- Local search input + radius + search button -->
-    <div id="local-search-settings">
-      <label for="local-search-location">Location:</label>
-      <input type="text" id="local-search-location" placeholder="Enter city or coordinates">
+  <!-- Local search input + radius dropdown + search button -->
+  <div id="local-search-settings" class="filter-group">
+    <label for="local-search-location">Location:</label>
+    <input type="text" id="local-search-location" placeholder="Enter city or coordinates">
 
-      <label for="local-search-radius">Radius:</label>
-      <select id="local-search-radius">
-        <option value="1">1 km</option>
-        <option value="5">5 km</option>
-        <option value="10">10 km</option>
-        <option value="25">25 km</option>
-        <option value="50">50 km</option>
-        <option value="100">100 km</option>
-        <option value="500">500 km</option>
-      </select>
+    <label for="local-search-radius">Radius:</label>
+    <select id="local-search-radius">
+      <option value="1">1 km</option>
+      <option value="5">5 km</option>
+      <option value="10">10 km</option>
+      <option value="25">25 km</option>
+      <option value="50">50 km</option>
+      <option value="100">100 km</option>
+      <option value="500">500 km</option>
+    </select>
 
-      <button id="local-search-button">Search</button>
+    <!-- Added search button -->
+    <button id="local-search-button">Search</button>
 
-      <!-- Suggestions dropdown -->
-      <ul id="local-search-suggestions"></ul>
-    </div>
+    <!-- Suggestions dropdown -->
+    <ul id="local-search-suggestions"></ul>
   </div>
 </div>
 

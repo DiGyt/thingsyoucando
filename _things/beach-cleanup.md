@@ -4,7 +4,8 @@ country: "Spain"
 duration: "2 hours"
 online: false
 categories: ["Ecology", "Volunteering", "Movement"]
-lat: 36.7213
+geo_restricted: true   # or false
+lat: 36.7213           # only required if geo_restricted is true
 lng: -4.4214
 thumbnail: "/assets/images/beach-cleanup.jpg"
 ---

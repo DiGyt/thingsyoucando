@@ -55,7 +55,7 @@
     <label><input type="checkbox" id="filter-local"> Search locally</label>
   </div>
 
-  <!-- Local search input + radius dropdown (hidden until checkbox is checked) -->
+  <!-- Local search input + radius dropdown + search button -->
   <div id="local-search-settings" class="filter-group">
     <label for="local-search-location">Location:</label>
     <input type="text" id="local-search-location" placeholder="Enter city or coordinates">
@@ -70,6 +70,12 @@
       <option value="100">100 km</option>
       <option value="500">500 km</option>
     </select>
+
+    <!-- Added search button -->
+    <button id="local-search-button">Search</button>
+
+    <!-- Suggestions dropdown -->
+    <ul id="local-search-suggestions"></ul>
   </div>
 </div>
 

@@ -1,12 +1,10 @@
 /* ================================
-
    Global Styles & Typography
-
 ================================ */
 :root {
-  --primary-color: #1e3a8a; /* deep blue */
-  --primary-light: #3b82f6; /* lighter blue highlight */
-  --main-bg: rgba(30,58,138,0.85); /* dark overlay for cards */
+  --primary-color: #1e3a8a;
+  --primary-light: #3b82f6;
+  --main-bg: rgba(30,58,138,0.85);
   --card-bg: rgba(59,130,246,0.75);
   --text-color: #f3f4f6;
   --border-color: #3b82f6;
@@ -30,8 +28,6 @@ body {
 
 /* ================================
    Global Page Overlay
-   - Fixed to viewport
-   - Transparent at top for brighter header
 ================================ */
 .page-overlay {
   position: fixed;
@@ -46,7 +42,6 @@ body {
 
 /* ================================
    Header
-   - Remove overlay color filter
 ================================ */
 .site-header {
   position: relative;
@@ -64,7 +59,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* removed background entirely */
 }
 
 .site-header h1 {
@@ -104,7 +98,8 @@ body {
 }
 
 .filter-group select,
-.filter-group input[type=checkbox] {
+.filter-group input[type=checkbox],
+.filter-group input[type=text] {
   padding: 0.5rem;
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -119,6 +114,61 @@ body {
   margin-right: 1rem;
   margin-bottom: 0.5rem;
   cursor: pointer;
+}
+
+/* ================================
+   Local search styling
+================================ */
+.local-search-box {
+  display: none; /* toggled via JS */
+  position: absolute;
+  top: 100%; /* directly below checkbox */
+  left: 0;
+  width: 100%;
+  background: var(--card-bg);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  flex-direction: column;
+}
+
+.local-search-box label {
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+.local-search-box input,
+.local-search-box select,
+.local-search-box button {
+  margin-top: 0.25rem;
+}
+
+.local-search-suggestions {
+  list-style: none;
+  margin: 0.5rem 0 0 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  background: #fff;
+  color: #111827;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 20;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.local-search-suggestions li {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.local-search-suggestions li:hover {
+  background-color: var(--primary-light);
+  color: #fff;
 }
 
 /* ================================

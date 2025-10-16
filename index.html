@@ -4,6 +4,13 @@
   <meta charset="UTF-8">
   <title>Things You Can Do</title>
   <link rel="stylesheet" href="/thingsyoucando/assets/css/style.css">
+  <style>
+    /* Simple hidden toggle for local search inputs */
+    #local-search-settings {
+      display: none;
+      margin-top: 0.5em;
+    }
+  </style>
 </head>
 <body>
 
@@ -42,6 +49,28 @@
     <legend>Categories:</legend>
     <!-- JS dynamically adds category checkboxes here -->
   </fieldset>
+
+  <!-- Local search toggle -->
+  <div class="filter-group">
+    <label><input type="checkbox" id="filter-local"> Search locally</label>
+  </div>
+
+  <!-- Local search input + radius dropdown (hidden until checkbox is checked) -->
+  <div id="local-search-settings" class="filter-group">
+    <label for="local-search-location">Location:</label>
+    <input type="text" id="local-search-location" placeholder="Enter city or coordinates">
+
+    <label for="local-search-radius">Radius:</label>
+    <select id="local-search-radius">
+      <option value="1">1 km</option>
+      <option value="5">5 km</option>
+      <option value="10">10 km</option>
+      <option value="25">25 km</option>
+      <option value="50">50 km</option>
+      <option value="100">100 km</option>
+      <option value="500">500 km</option>
+    </select>
+  </div>
 </div>
 
 <main id="things-list" class="things-list container">
@@ -51,6 +80,13 @@
 <!-- Pass baseurl to JS -->
 <script>
   const baseurl = "/thingsyoucando";
+
+  // Toggle local search settings visibility
+  const localCheckbox = document.getElementById('filter-local');
+  const localSettings = document.getElementById('local-search-settings');
+  localCheckbox.addEventListener('change', () => {
+    localSettings.style.display = localCheckbox.checked ? 'block' : 'none';
+  });
 </script>
 
 <!-- Load precomputed filters (built at build time) -->

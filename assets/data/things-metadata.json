@@ -10,7 +10,10 @@
       "Volunteering",
       "Movement"
     ],
-    "url": "/things/beach-cleanup/"
+    "url": "/things/beach-cleanup/",
+    "geo_restricted": true,
+    "lat": 36.7213,
+    "lng": -4.4214
   },
   {
     "id": "donate-clothes",
@@ -22,7 +25,10 @@
       "Volunteering",
       "Community"
     ],
-    "url": "/things/donate-clothes/"
+    "url": "/things/donate-clothes/",
+    "geo_restricted": false,
+    "lat": null,
+    "lng": null
   },
   {
     "id": "plant-tree",
@@ -34,6 +40,9 @@
       "Ecology",
       "Volunteering"
     ],
-    "url": "/things/plant-tree/"
+    "url": "/things/plant-tree/",
+    "geo_restricted": true,
+    "lat": 48.86,
+    "lng": 2.35
   }
 ]

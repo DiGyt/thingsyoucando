@@ -4,6 +4,7 @@ country: "USA"
 duration: "15 minutes"
 online: false
 categories: ["Volunteering", "Community"]
+geo_restricted: false
 thumbnail: "/assets/images/donate-clothes.jpg"
 ---
 

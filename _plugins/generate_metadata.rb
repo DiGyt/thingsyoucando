@@ -2,7 +2,7 @@ require 'json'
 require 'fileutils'
 
 Jekyll::Hooks.register :site, :post_write do |site|
-  # Collect metadata for each thing
+  # Collect metadata for each thing, now including geo-restriction and coordinates
   things = site.collections['things'].docs.map do |doc|
     {
       id: doc.data['slug'] || doc.basename_without_ext,
@@ -11,7 +11,10 @@ Jekyll::Hooks.register :site, :post_write do |site|
       duration: doc.data['duration'],
       online: doc.data['online'],
       categories: doc.data['categories'],
-      url: doc.url
+      url: doc.url,
+      geo_restricted: doc.data['geo_restricted'] || false,
+      lat: doc.data['lat'],
+      lng: doc.data['lng']
     }
   end
 
@@ -37,7 +40,7 @@ Jekyll::Hooks.register :site, :post_write do |site|
     };
   JS
 
-  File.open(File.join(site.dest, 'assets', 'data', 'filters.js'), 'w') do |f|
+  File.open(File.join(data_dir, 'filters.js'), 'w') do |f|
     f.write(filters_js)
   end
 end

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     categoriesContainer: document.getElementById('filter-categories'),
     categories: [], // will populate after checkboxes are added
     localCheckbox: document.getElementById('filter-local'),
-    localWrapper: document.getElementById('local-search-settings'), // container for input + radius + button
+    localWrapper: document.getElementById('local-search-wrapper'), // container for input + radius + button
     localLocation: document.getElementById('local-search-location'),
     localRadius: document.getElementById('local-search-radius'),
     localButton: document.getElementById('local-search-button'),

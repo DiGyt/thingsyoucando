@@ -4,6 +4,8 @@ country: "Spain"
 duration: "2 hours"
 online: false
 categories: ["Ecology", "Volunteering", "Movement"]
+lat: 36.7213
+lng: -4.4214
 thumbnail: "/assets/images/beach-cleanup.jpg"
 ---
 

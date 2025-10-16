@@ -7,9 +7,6 @@
 </head>
 <body>
 
-<!-- Global dark overlay behind everything -->
-<div class="page-overlay"></div>
-
 <header class="site-header">
   <div class="header-overlay">
     <div class="container">
@@ -44,9 +41,12 @@
   </fieldset>
 </div>
 
-<main id="things-list" class="things-list container">
-  <!-- JS populates this list -->
-</main>
+<!-- Page content area with its own background overlay -->
+<div class="page-content">
+  <main id="things-list" class="things-list container">
+    <!-- JS populates this list -->
+  </main>
+</div>
 
 <!-- Pass baseurl to JS -->
 <script>

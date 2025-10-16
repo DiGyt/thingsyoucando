@@ -2,9 +2,9 @@
    Global Styles & Typography
 ================================ */
 :root {
-  --primary-color: #1e3a8a; /* deep blue */
-  --primary-light: #3b82f6; /* lighter blue highlight */
-  --main-bg: rgba(30,58,138,0.85); /* dark overlay */
+  --primary-color: #1e3a8a;       /* deep blue */
+  --primary-light: #3b82f6;       /* lighter blue highlight */
+  --main-bg: rgba(30,58,138,0.85); /* dark overlay for cards */
   --card-bg: rgba(59,130,246,0.75);
   --text-color: #f3f4f6;
   --border-color: #3b82f6;
@@ -20,7 +20,7 @@ body {
   font-family: var(--font-sans);
   color: var(--text-color);
   line-height: 1.6;
-  background: url("/thingsyoucando/assets/images/background.jpg") no-repeat center center fixed;
+  background: url('{{ site.baseurl }}/assets/images/background.jpg') no-repeat center center fixed;
   background-size: cover;
   position: relative;
   overflow-x: hidden;
@@ -28,6 +28,8 @@ body {
 
 /* ================================
    Global Page Overlay
+   - Fixed to viewport
+   - Transparent at top for brighter header
 ================================ */
 .page-overlay {
   position: fixed;
@@ -35,13 +37,19 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(20, 40, 100, 0.85); /* dark blue filter over entire image */
+  background: linear-gradient(
+    to bottom,
+    rgba(20,40,100,0.15) 0%,    /* very transparent at top */
+    rgba(20,40,100,0.35) 200px, /* soft darkening below header */
+    rgba(20,40,100,0.85) 500px  /* full darkness for main content */
+  );
   z-index: 0;
   pointer-events: none;
 }
 
 /* ================================
    Header
+   - Remove overlay color filter
 ================================ */
 .site-header {
   position: relative;
@@ -56,10 +64,10 @@ body {
 .header-overlay {
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(30, 58, 138, 0.6), rgba(30, 58, 138, 0.3)); /* brighter gradient for the header area */
   display: flex;
   align-items: center;
   justify-content: center;
+  /* removed background entirely */
 }
 
 .site-header h1 {
@@ -78,10 +86,10 @@ body {
   gap: 1rem;
   max-width: 900px;
   margin: -3rem auto 2rem auto;
-  background-color: rgba(30, 58, 138, 0.9);
+  background-color: rgba(30,58,138,0.9);
   padding: 1rem 2rem;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
   position: relative;
   z-index: 2;
 }
@@ -99,7 +107,7 @@ body {
 }
 
 .filter-group select,
-.filter-group input[type=checkbox] {
+.filter-group input[type="checkbox"] {
   padding: 0.5rem;
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -108,7 +116,6 @@ body {
   color: #111827;
 }
 
-/* Category checkboxes inline */
 #filter-categories label {
   display: inline-flex;
   align-items: center;
@@ -140,12 +147,12 @@ body {
   transition: transform 0.15s ease, box-shadow 0.2s ease;
   font-weight: 600;
   font-size: 1.15rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .thing-summary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
   border-color: var(--accent-color);
 }
 
@@ -170,13 +177,10 @@ body {
    Animations
 ================================ */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
+
 /* ================================
    Responsive
 ================================ */
@@ -187,25 +191,28 @@ body {
     margin: -2rem auto 2rem auto;
     gap: 0.5rem;
   }
+
   .filter-group {
     flex: 1 1 100%;
   }
 }
+
 @media (max-width: 768px) {
   .site-header h1 {
     font-size: 2.5rem;
   }
 }
+
 @media (max-width: 480px) {
   .site-header h1 {
     font-size: 2rem;
   }
+
   .thing-summary {
     font-size: 1rem;
   }
+
   .filters {
     padding: 0.5rem 1rem;
   }
 }
-
-/*# sourceMappingURL=style.css.map */

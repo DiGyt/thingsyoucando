@@ -57,8 +57,9 @@ jobs:
         if: github.ref == 'refs/heads/preview'
         run: |
           shopt -s dotglob
+          mkdir -p _site/_preview
           mv _site/* _site/_preview/
-          echo "Files moved to _preview folder"
+          echo "Files successfully moved to _site/_preview"
 
       # 7. Deploy built site to gh-pages branch
       - name: Deploy to GitHub Pages

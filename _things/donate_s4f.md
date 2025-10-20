@@ -3,7 +3,7 @@ title: "Donate for Scientists4Future"
 country: "Germany"
 duration: "5 minutes"
 online: true
-categories: ["Ecology", "donations"]
+categories: ["Ecology", "Donations"]
 geo_restricted: false
 thumbnail: "https://de.scientists4future.org/wp-content/uploads/sites/3/2020/10/s4f_menuicon.svg"
 ---

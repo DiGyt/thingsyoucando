@@ -1,5 +1,21 @@
 [
   {
+    "id": "beach-cleanup-test",
+    "title": "Beach Cleanup2",
+    "country": "Spain",
+    "duration": "2 hours",
+    "online": false,
+    "categories": [
+      "Ecology",
+      "Volunteering",
+      "Movement"
+    ],
+    "url": "/things/beach-cleanup-test/",
+    "geo_restricted": true,
+    "lat": 36.7213,
+    "lng": -4.4214
+  },
+  {
     "id": "beach-cleanup",
     "title": "Beach Cleanup",
     "country": "Spain",

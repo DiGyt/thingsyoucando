@@ -31,6 +31,21 @@
     "lng": null
   },
   {
+    "id": "donate_s4f",
+    "title": "Donate for Scientists4Future",
+    "country": "Germany",
+    "duration": "5 minutes",
+    "online": true,
+    "categories": [
+      "Ecology",
+      "Donations"
+    ],
+    "url": "/things/donate-s4f/",
+    "geo_restricted": false,
+    "lat": null,
+    "lng": null
+  },
+  {
     "id": "plant-tree",
     "title": "Plant a Tree",
     "country": "France",

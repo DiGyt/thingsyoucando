@@ -21,7 +21,7 @@ body {
   color: var(--text-color);
   line-height: 1.6;
   font-size: clamp(14px, 1vw + 0.5rem, 18px); /* responsive font */
-  background: url("/preview/assets/images/background.jpg") no-repeat center center fixed;
+  background: url("/thingsyoucando/preview/assets/images/background.jpg") no-repeat center center fixed;
   background-size: cover;
   position: relative;
   overflow-x: hidden;

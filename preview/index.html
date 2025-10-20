@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Things You Can Do</title>
+  <link rel="stylesheet" href="/thingsyoucando/preview/assets/css/style.css">
+</head>
+<body>
+
+<div class="page-overlay"></div>
+
+<header class="site-header">
+  <div class="header-overlay">
+    <div class="container">
+      <h1>Things You Can Do</h1>
+    </div>
+  </div>
+</header>
+
+<div id="filters" class="filters container">
+  <div class="filter-group">
+    <label for="filter-country">Country:</label>
+    <select id="filter-country">
+      <option value="">All Countries</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label for="filter-duration">Duration:</label>
+    <select id="filter-duration">
+      <option value="">All Durations</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label><input type="checkbox" id="filter-online"> Online only</label>
+  </div>
+
+  <fieldset id="filter-categories" class="filter-group">
+    <legend>Categories:</legend>
+  </fieldset>
+
+  <!-- Local search toggle -->
+  <div class="filter-group local-search-container">
+    <label class="local-search-label">
+      <input type="checkbox" id="filter-local"> Search locally
+    </label>
+
+    <!-- These now sit directly underneath when checked -->
+    <div id="local-search-settings" class="local-search-box">
+      <label for="local-search-location">Location:</label>
+      <input type="text" id="local-search-location" placeholder="Enter city or coordinates">
+
+      <!-- Suggestions dropdown -->
+      <ul id="local-search-suggestions" class="local-search-suggestions"></ul>
+
+      <label for="local-search-radius">Radius:</label>
+      <select id="local-search-radius">
+        <option value="1">1 km</option>
+        <option value="5">5 km</option>
+        <option value="10">10 km</option>
+        <option value="25">25 km</option>
+        <option value="50">50 km</option>
+        <option value="100">100 km</option>
+        <option value="500">500 km</option>
+      </select>
+
+      <button id="local-search-button">Search</button>
+    </div>
+  </div>
+</div>
+
+<main id="things-list" class="things-list container"></main>
+
+<script>
+  const baseurl = "/thingsyoucando/preview";
+
+  const localCheckbox = document.getElementById('filter-local');
+  const localSettings = document.getElementById('local-search-settings');
+
+  localCheckbox.addEventListener('change', () => {
+    localSettings.style.display = localCheckbox.checked ? 'flex' : 'none';
+  });
+</script>
+
+<script src="/thingsyoucando/preview/assets/data/filters.js"></script>
+<script src="/thingsyoucando/preview/assets/js/main.js"></script>
+
+</body>
+</html>

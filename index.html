@@ -45,10 +45,12 @@ layout: default
   </fieldset>
 
   <!-- Local search toggle -->
-  <div class="filter-group local-search-container" style="position: relative;">
-    <label><input type="checkbox" id="filter-local"> Search locally</label>
+  <div class="filter-group local-search-container">
+    <label class="local-search-label">
+      <input type="checkbox" id="filter-local"> Search locally
+    </label>
 
-    <!-- Local search box container -->
+    <!-- These now sit directly underneath when checked -->
     <div id="local-search-settings" class="local-search-box">
       <label for="local-search-location">Location:</label>
       <input type="text" id="local-search-location" placeholder="Enter city or coordinates">
@@ -72,16 +74,16 @@ layout: default
   </div>
 </div>
 
-<main id="things-list" class="things-list container">
-</main>
+<main id="things-list" class="things-list container"></main>
 
 <script>
   const baseurl = "{{ site.baseurl }}";
 
   const localCheckbox = document.getElementById('filter-local');
   const localSettings = document.getElementById('local-search-settings');
+
   localCheckbox.addEventListener('change', () => {
-    localSettings.style.display = localCheckbox.checked ? 'block' : 'none';
+    localSettings.style.display = localCheckbox.checked ? 'flex' : 'none';
   });
 </script>
 

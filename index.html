@@ -11,7 +11,6 @@ layout: default
 </head>
 <body>
 
-<!-- Global dark overlay behind everything -->
 <div class="page-overlay"></div>
 
 <header class="site-header">
@@ -22,7 +21,6 @@ layout: default
   </div>
 </header>
 
-<!-- Floating filters box -->
 <div id="filters" class="filters container">
   <div class="filter-group">
     <label for="filter-country">Country:</label>
@@ -44,17 +42,17 @@ layout: default
 
   <fieldset id="filter-categories" class="filter-group">
     <legend>Categories:</legend>
-    <!-- JS dynamically adds category checkboxes here -->
   </fieldset>
 
   <!-- Local search toggle -->
-  <div class="filter-group" style="position: relative;">
+  <div class="filter-group local-search-container" style="position: relative;">
     <label><input type="checkbox" id="filter-local"> Search locally</label>
 
-    <!-- Local search box container (appears under checkbox) -->
+    <!-- Local search box container -->
     <div id="local-search-settings" class="local-search-box">
       <label for="local-search-location">Location:</label>
       <input type="text" id="local-search-location" placeholder="Enter city or coordinates">
+
       <!-- Suggestions dropdown -->
       <ul id="local-search-suggestions" class="local-search-suggestions"></ul>
 
@@ -70,20 +68,16 @@ layout: default
       </select>
 
       <button id="local-search-button">Search</button>
-
     </div>
   </div>
 </div>
 
 <main id="things-list" class="things-list container">
-  <!-- JS populates this list -->
 </main>
 
-<!-- Pass baseurl to JS -->
 <script>
   const baseurl = "{{ site.baseurl }}";
 
-  // Toggle local search settings visibility
   const localCheckbox = document.getElementById('filter-local');
   const localSettings = document.getElementById('local-search-settings');
   localCheckbox.addEventListener('change', () => {
@@ -91,10 +85,7 @@ layout: default
   });
 </script>
 
-<!-- Load precomputed filters (built at build time) -->
 <script src="{{ site.baseurl }}/assets/data/filters.js"></script>
-
-<!-- Load main JS -->
 <script src="{{ site.baseurl }}/assets/js/main.js"></script>
 
 </body>

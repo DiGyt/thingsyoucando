@@ -1,12 +1,14 @@
-name: Build and Deploy Jekyll
+name: Build and Deploy Jekyll (Main + Preview)
 
 on:
   push:
     branches:
       - jekyll
+      - preview
   pull_request:
     branches:
       - jekyll
+      - preview
 
 jobs:
   build-deploy:
@@ -29,13 +31,38 @@ jobs:
           gem install bundler
           bundle install
 
-      # 4. Build the Jekyll site (runs your _plugins/generate_metadata.rb)
-      - name: Build Jekyll site
-        run: bundle exec jekyll build
+      # 4. Determine publish path and baseurl
+      - name: Set publish directory and baseurl
+        id: set-dir
+        run: |
+          BRANCH_NAME="${GITHUB_REF##*/}"
+          if [ "$BRANCH_NAME" = "jekyll" ]; then
+            echo "publish_dir=./_site" >> $GITHUB_ENV
+            echo "jekyll_baseurl=" >> $GITHUB_ENV
+          elif [ "$BRANCH_NAME" = "preview" ]; then
+            echo "publish_dir=./_site/_preview" >> $GITHUB_ENV
+            echo "jekyll_baseurl=/thingsyoucando/_preview" >> $GITHUB_ENV
+            mkdir -p ./_site/_preview
+          else
+            echo "Unsupported branch. Exiting."
+            exit 1
+          fi
 
-      # 5. Deploy built site to gh-pages branch
+      # 5. Build the Jekyll site with dynamic baseurl
+      - name: Build Jekyll site
+        run: bundle exec jekyll build --baseurl ${{ env.jekyll_baseurl }}
+
+      # 6. Move files into _preview folder (only for preview branch)
+      - name: Move files to _preview (if needed)
+        if: github.ref == 'refs/heads/preview'
+        run: |
+          shopt -s dotglob
+          mv _site/* _site/_preview/
+          echo "Files moved to _preview folder"
+
+      # 7. Deploy built site to gh-pages branch
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./_site
+          publish_dir: ${{ env.publish_dir }}

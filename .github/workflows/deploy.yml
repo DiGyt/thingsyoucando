@@ -1,4 +1,4 @@
-name: Build and Deploy Jekyll (Main + Preview)
+name: Build and Deploy Jekyll
 
 on:
   push:
@@ -31,39 +31,15 @@ jobs:
           gem install bundler
           bundle install
 
-      # 4. Determine publish path and baseurl
-      - name: Set publish directory and baseurl
-        id: set-dir
-        run: |
-          BRANCH_NAME="${GITHUB_REF##*/}"
-          if [ "$BRANCH_NAME" = "jekyll" ]; then
-            echo "publish_dir=./_site" >> $GITHUB_ENV
-            echo "jekyll_baseurl=" >> $GITHUB_ENV
-          elif [ "$BRANCH_NAME" = "preview" ]; then
-            echo "publish_dir=./_site/_preview" >> $GITHUB_ENV
-            echo "jekyll_baseurl=/thingsyoucando/_preview" >> $GITHUB_ENV
-            mkdir -p ./_site/_preview
-          else
-            echo "Unsupported branch. Exiting."
-            exit 1
-          fi
-
-      # 5. Build the Jekyll site with dynamic baseurl
+      # 4. Build the Jekyll site (runs your _plugins/generate_metadata.rb)
       - name: Build Jekyll site
-        run: bundle exec jekyll build --baseurl ${{ env.jekyll_baseurl }}
+        run: bundle exec jekyll build
 
-      # 6. Move files into _preview folder (only for preview branch)
-      - name: Move files to _preview (if needed)
-        if: github.ref == 'refs/heads/preview'
-        run: |
-          shopt -s dotglob
-          mkdir -p _site/_preview
-          mv _site/* _site/_preview/
-          echo "Files successfully moved to _site/_preview"
-
-      # 7. Deploy built site to gh-pages branch
+      # 5. Deploy built site to gh-pages branch
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ env.publish_dir }}
+          # Conditional publish directory: root for jekyll, _preview for preview branch
+          publish_dir: ${{ github.ref == 'refs/heads/preview' && '_site' || '_site' }}
+          destination_dir: ${{ github.ref == 'refs/heads/preview' && '_preview' || '' }}

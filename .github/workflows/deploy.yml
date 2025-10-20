@@ -40,6 +40,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Conditional publish directory: root for jekyll, _preview for preview branch
+          # Conditional publish directory: root for jekyll, preview for preview branch
           publish_dir: ${{ github.ref == 'refs/heads/preview' && '_site' || '_site' }}
-          destination_dir: ${{ github.ref == 'refs/heads/preview' && '_preview' || '' }}
+          destination_dir: ${{ github.ref == 'refs/heads/preview' && 'preview' || '' }}

@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     categoriesContainer: document.getElementById('filter-categories'),
     categories: [], // will populate after checkboxes are added
     localCheckbox: document.getElementById('filter-local'),
-    localWrapper: document.getElementById('local-search-wrapper'), // container for input + radius + button
+    localWrapper: document.getElementById('local-search-settings'), // FIXED: points to correct div
     localLocation: document.getElementById('local-search-location'),
     localRadius: document.getElementById('local-search-radius'),
     localButton: document.getElementById('local-search-button'),
@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Populate filter options from filtersData ---
   if (typeof filtersData !== 'undefined') {
-    // Country dropdown
     filtersData.country.forEach(c => {
       const opt = document.createElement('option');
       opt.value = c;
@@ -29,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
       filters.country.appendChild(opt);
     });
 
-    // Duration dropdown sorted ascending
     filtersData.duration
       .sort((a, b) => parseDuration(a) - parseDuration(b))
       .forEach(d => {
@@ -39,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         filters.duration.appendChild(opt);
       });
 
-    // Category checkboxes
     filtersData.categories.forEach(cat => {
       const label = document.createElement('label');
       const input = document.createElement('input');
@@ -86,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedCats = filters.categories.filter(c => c.checked).map(c => c.value);
     if (selectedCats.length && !selectedCats.some(c => item.categories.includes(c))) return false;
 
-    // Geo filtering
     if (userLat !== null && userLng !== null && radiusKm !== null) {
       if (item.geo_restricted) {
         if (typeof item.lat !== 'number' || typeof item.lng !== 'number') return false;

@@ -1,6 +1,6 @@
 title: "Things You Can Do"
-baseurl: "/thingsyoucando"
-url: ""
+baseurl: ""
+url: "https://yourusername.github.io/thingsyoucando"
 
 collections:
   things:

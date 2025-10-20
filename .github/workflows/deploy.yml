@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - jekyll
+      - preview
   pull_request:
     branches:
       - jekyll
+      - preview
 
 jobs:
   build-deploy:
@@ -17,25 +19,42 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      # 2. Setup Ruby environment
+      # 2. Setup Ruby
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2
 
-      # 3. Install bundler and gems from Gemfile
+      # 3. Install dependencies
       - name: Install Jekyll & Bundler
         run: |
           gem install bundler
           bundle install
 
-      # 4. Build the Jekyll site (runs your _plugins/generate_metadata.rb)
-      - name: Build Jekyll site
-        run: bundle exec jekyll build
+      # 4a. Build site for jekyll branch
+      - name: Build site (jekyll branch)
+        if: github.ref == 'refs/heads/jekyll'
+        run: bundle exec jekyll build --baseurl "/thingsyoucando"
 
-      # 5. Deploy built site to gh-pages branch
-      - name: Deploy to GitHub Pages
+      # 4b. Build site for preview branch
+      - name: Build site (preview branch)
+        if: github.ref == 'refs/heads/preview'
+        run: bundle exec jekyll build --baseurl "/thingsyoucando/preview"
+
+      # 5a. Deploy to gh-pages (main site)
+      - name: Deploy live site
+        if: github.ref == 'refs/heads/jekyll'
         uses: peaceiris/actions-gh-pages@v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_site
+          destination_dir: /
+
+      # 5b. Deploy preview site to subdirectory
+      - name: Deploy preview site
+        if: github.ref == 'refs/heads/preview'
+        uses: peaceiris/actions-gh-pages@v4.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          destination_dir: preview

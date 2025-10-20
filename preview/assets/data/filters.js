@@ -1,10 +1,10 @@
 const filtersData = {
   categories: [
   "Community",
+  "Donations",
   "Ecology",
   "Movement",
-  "Volunteering",
-  "donations"
+  "Volunteering"
 ],
   country: [
   "France",

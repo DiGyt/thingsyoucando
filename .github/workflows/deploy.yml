@@ -34,12 +34,12 @@ jobs:
       # 4a. Build site for jekyll branch
       - name: Build site (jekyll branch)
         if: github.ref == 'refs/heads/jekyll'
-        run: bundle exec jekyll build --baseurl ""
+        run: bundle exec jekyll build --baseurl "/thingsyoucando"
 
       # 4b. Build site for preview branch
       - name: Build site (preview branch)
         if: github.ref == 'refs/heads/preview'
-        run: bundle exec jekyll build --baseurl "/preview"
+        run: bundle exec jekyll build --baseurl "/thingsyoucando/preview"
 
       # 5a. Deploy to gh-pages (main site)
       - name: Deploy live site

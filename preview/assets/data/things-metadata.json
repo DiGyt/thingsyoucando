@@ -61,6 +61,20 @@
     "lng": 2.35
   },
   {
+    "id": "say_hello_to_your_neighbor",
+    "title": "Say hello to your neighbor",
+    "country": "No",
+    "duration": "",
+    "online": false,
+    "categories": [
+      "Community"
+    ],
+    "url": "/things/say-hello-to-your-neighbor/",
+    "geo_restricted": false,
+    "lat": null,
+    "lng": null
+  },
+  {
     "id": "untitled",
     "title": "Untitled",
     "country": "Germany",

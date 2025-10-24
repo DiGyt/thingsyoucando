@@ -59,5 +59,17 @@
     "geo_restricted": true,
     "lat": 48.86,
     "lng": 2.35
+  },
+  {
+    "id": "untitled",
+    "title": "Untitled",
+    "country": "Germany",
+    "duration": "",
+    "online": false,
+    "categories": [],
+    "url": "/things/untitled/",
+    "geo_restricted": false,
+    "lat": null,
+    "lng": null
   }
 ]

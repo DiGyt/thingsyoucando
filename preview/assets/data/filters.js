@@ -13,6 +13,7 @@ const filtersData = {
   "USA"
 ],
   duration: [
+  "",
   "15 minutes",
   "2 hours",
   "30 minutes",

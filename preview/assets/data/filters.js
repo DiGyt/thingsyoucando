@@ -7,6 +7,7 @@ const filtersData = {
   "Volunteering"
 ],
   country: [
+  "All Countries",
   "France",
   "Germany",
   "No",

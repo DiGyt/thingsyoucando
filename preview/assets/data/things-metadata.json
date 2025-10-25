@@ -89,6 +89,20 @@
     "lng": null
   },
   {
+    "id": "stickern",
+    "title": "Stickern",
+    "country": "All Countries",
+    "duration": "",
+    "online": false,
+    "categories": [
+      "Community"
+    ],
+    "url": "/things/stickern/",
+    "geo_restricted": false,
+    "lat": null,
+    "lng": null
+  },
+  {
     "id": "untitled",
     "title": "Untitled",
     "country": "Germany",

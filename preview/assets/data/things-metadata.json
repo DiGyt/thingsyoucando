@@ -46,6 +46,22 @@
     "lng": null
   },
   {
+    "id": "drink_alcohol",
+    "title": "Drink alcohol",
+    "country": "Germany",
+    "duration": "",
+    "online": true,
+    "categories": [
+      "Volunteering",
+      "Community",
+      "Ecology"
+    ],
+    "url": "/things/drink-alcohol/",
+    "geo_restricted": false,
+    "lat": null,
+    "lng": null
+  },
+  {
     "id": "go_touch_some_grass",
     "title": "Go touch some grass",
     "country": "USA",

@@ -1,37 +1,47 @@
-<h2 class="page-title">Submit Your Thing</h2>
+<div class="page-overlay"></div>
 
-<form id="customForm" class="custom-form">
-  <label for="title">Title</label>
-  <input type="text" id="title" required>
+<header class="site-header">
+  <div class="header-overlay">
+    <div class="container">
+      <h1>Submit Your Thing</h1>
+    </div>
+  </div>
+</header>
 
-  <label for="country">Country</label>
-  <input type="text" id="country">
+<main class="container">
+  <form id="customForm" class="custom-form">
+    <label for="title">Title</label>
+    <input type="text" id="title" required>
 
-  <label for="fromHome">Can you do this from home? (Yes/No)</label>
-  <select id="fromHome">
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
+    <label for="country">Country</label>
+    <input type="text" id="country">
 
-  <label for="categories">Categories (comma‑separated)</label>
-  <input type="text" id="categories">
+    <label for="fromHome">Can you do this from home? (Yes/No)</label>
+    <select id="fromHome">
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
 
-  <label for="restricted">Is this thing restricted? (Yes/No)</label>
-  <select id="restricted">
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
+    <label for="categories">Categories (comma‑separated)</label>
+    <input type="text" id="categories">
 
-  <label for="location">Location</label>
-  <input type="text" id="location">
+    <label for="restricted">Is this thing restricted? (Yes/No)</label>
+    <select id="restricted">
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
 
-  <label for="description">Description</label>
-  <textarea id="description" rows="4"></textarea>
+    <label for="location">Location</label>
+    <input type="text" id="location">
 
-  <button type="submit" id="submitBtn">Submit</button>
-</form>
+    <label for="description">Description</label>
+    <textarea id="description" rows="4"></textarea>
 
-<div class="message" id="message"></div>
+    <button type="submit" id="submitBtn">Submit</button>
+  </form>
+
+  <div class="message" id="message"></div>
+</main>
 
 <script>
 const form = document.getElementById('customForm');

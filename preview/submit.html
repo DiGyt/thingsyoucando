@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Submit Thing + Image</title>
+<style>
+body {
+  max-width: 600px;
+  margin: auto;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  padding: 20px;
+}
+form {
+  background: #fff;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+input, textarea, select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+button {
+  padding: 10px;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:disabled {
+  background: #93c5fd;
+}
+.message {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<h2>Submit Your Thing</h2>
+
+<form id="customForm">
+  <label>Title</label>
+  <input type="text" id="title" required>
+
+  <label>Country</label>
+  <input type="text" id="country">
+
+  <label>Can you do this from home? (Yes/No)</label>
+  <select id="fromHome">
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+
+  <label>Categories (comma‑separated)</label>
+  <input type="text" id="categories">
+
+  <label>Is this thing restricted? (Yes/No)</label>
+  <select id="restricted">
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+
+  <label>Location</label>
+  <input type="text" id="location">
+
+  <label>Description</label>
+  <textarea id="description" rows="4"></textarea>
+
+  <label>Upload Image</label>
+  <input type="file" id="imageUpload" accept="image/*">
+
+  <button type="submit" id="submitBtn">Submit</button>
+</form>
+
+<div class="message" id="message"></div>
+
+<script>
+const form = document.getElementById('customForm');
+const messageDiv = document.getElementById('message');
+const submitBtn = document.getElementById('submitBtn');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  messageDiv.textContent = "Uploading image…";
+
+  // 1. Upload image to iimg.live
+  let imageUrl = "";
+  const fileInput = document.getElementById('imageUpload');
+  if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    const uploadForm = new FormData();
+    uploadForm.append('file', file);
+
+    try {
+      const response = await fetch("https://iimg.live/api/upload", {
+        method: "POST",
+        body: uploadForm
+      });
+      const result = await response.json();
+      if (result && result.url) {
+        imageUrl = result.url;
+      } else {
+        throw new Error("No URL returned");
+      }
+    } catch (err) {
+      messageDiv.textContent = "Image upload failed: " + err.message;
+      submitBtn.disabled = false;
+      return;
+    }
+  }
+
+  messageDiv.textContent = "Submitting form…";
+
+  // 2. Build Google Form submission
+  const gFormData = new FormData();
+  gFormData.append("entry.190422142", document.getElementById('title').value);
+  gFormData.append("entry.1866049912", document.getElementById('country').value);
+  gFormData.append("entry.1972481565", document.getElementById('fromHome').value);
+  gFormData.append("entry.657983376", document.getElementById('categories').value);
+  gFormData.append("entry.1609013511", document.getElementById('restricted').value);
+  gFormData.append("entry.1394052519", document.getElementById('location').value);
+  gFormData.append("entry.952001199", document.getElementById('description').value);
+  gFormData.append("entry.IMAGE_FIELD_ID", imageUrl); // ← **Replace with your actual new field ID**
+
+  // 3. Post to Google
+  try {
+    await fetch("https://docs.google.com/forms/d/e/1FAIpQLScmTL4J_Ph2jpx-dZlEmtpW_UA0Jp_rkcmJSxNzMcN94N__dw/formResponse", {
+      method: "POST",
+      mode: "no-cors", 
+      body: gFormData
+    });
+    messageDiv.textContent = "Submitted successfully!";
+    form.reset();
+  } catch (err) {
+    messageDiv.textContent = "Submission error: " + err.message;
+  }
+  submitBtn.disabled = false;
+});
+</script>
+
+</body>
+</html>

@@ -1,79 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Submit Thing</title>
-<style>
-body {
-  max-width: 600px;
-  margin: auto;
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
-  padding: 20px;
-}
-form {
-  background: #fff;
-  padding: 20px 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-input, textarea, select {
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-}
-button {
-  padding: 10px;
-  background: #3b82f6;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-button:disabled {
-  background: #93c5fd;
-}
-.message {
-  margin-top: 15px;
-  font-weight: bold;
-  text-align: center;
-}
-</style>
-</head>
-<body>
+---
+layout: default
+title: Submit a Thing
+permalink: /preview/submit/
+---
 
-<h2>Submit Your Thing</h2>
+<h2 class="page-title">Submit Your Thing</h2>
 
-<form id="customForm">
-  <label>Title</label>
+<form id="customForm" class="custom-form">
+  <label for="title">Title</label>
   <input type="text" id="title" required>
 
-  <label>Country</label>
+  <label for="country">Country</label>
   <input type="text" id="country">
 
-  <label>Can you do this from home? (Yes/No)</label>
+  <label for="fromHome">Can you do this from home? (Yes/No)</label>
   <select id="fromHome">
     <option value="Yes">Yes</option>
     <option value="No">No</option>
   </select>
 
-  <label>Categories (comma‑separated)</label>
+  <label for="categories">Categories (comma‑separated)</label>
   <input type="text" id="categories">
 
-  <label>Is this thing restricted? (Yes/No)</label>
+  <label for="restricted">Is this thing restricted? (Yes/No)</label>
   <select id="restricted">
     <option value="Yes">Yes</option>
     <option value="No">No</option>
   </select>
 
-  <label>Location</label>
+  <label for="location">Location</label>
   <input type="text" id="location">
 
-  <label>Description</label>
+  <label for="description">Description</label>
   <textarea id="description" rows="4"></textarea>
 
   <button type="submit" id="submitBtn">Submit</button>
@@ -91,7 +49,6 @@ form.addEventListener('submit', async (e) => {
   submitBtn.disabled = true;
   messageDiv.textContent = "Submitting form…";
 
-  // Build Google Form submission
   const gFormData = new FormData();
   gFormData.append("entry.190422142", document.getElementById('title').value);
   gFormData.append("entry.1866049912", document.getElementById('country').value);
@@ -115,6 +72,3 @@ form.addEventListener('submit', async (e) => {
   submitBtn.disabled = false;
 });
 </script>
-
-</body>
-</html>

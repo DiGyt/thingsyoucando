@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Submit Your Thing</title>
-  <!-- Make sure this CSS is the compiled SCSS with variables included -->
   <link rel="stylesheet" href="/thingsyoucando/preview/assets/css/style.css">
 </head>
 <body>
@@ -21,7 +20,7 @@
 
 <main class="container">
   <form id="customForm" class="custom-form">
-    <label for="title">Title</label>
+    <label for="title">Title *</label>
     <input type="text" id="title" required>
 
     <label for="country">Country</label>
@@ -33,7 +32,7 @@
       <option value="No">No</option>
     </select>
 
-    <label for="categories">Categories (comma‑separated)</label>
+    <label for="categories">Categories (comma-separated)</label>
     <input type="text" id="categories">
 
     <label for="restricted">Is this thing restricted? (Yes/No)</label>
@@ -74,7 +73,7 @@ form.addEventListener('submit', async (e) => {
   gFormData.append("entry.952001199", document.getElementById('description').value);
 
   try {
-    await fetch("https://docs.google.com/forms/d/e/1FAIpQLScmTL4J_Ph2jpx-dZlEmtpW_UA0Jp_rkcmJSxNzMcN94N__dw/formResponse", {
+    await fetch("https://docs.google.com/forms/d/e/1FAIpQLScmTL4J_Ph2jpx-dZlEmtpW_UW_UA0Jp_rkcmJSxNzMcN94N__dw/formResponse", {
       method: "POST",
       mode: "no-cors",
       body: gFormData

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Submit Thing + Image</title>
+<title>Submit Thing</title>
 <style>
 body {
   max-width: 600px;
@@ -76,9 +76,6 @@ button:disabled {
   <label>Description</label>
   <textarea id="description" rows="4"></textarea>
 
-  <label>Upload Image</label>
-  <input type="file" id="imageUpload" accept="image/*">
-
   <button type="submit" id="submitBtn">Submit</button>
 </form>
 
@@ -92,37 +89,9 @@ const submitBtn = document.getElementById('submitBtn');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   submitBtn.disabled = true;
-  messageDiv.textContent = "Uploading image…";
-
-  // 1. Upload image to iimg.live
-  let imageUrl = "";
-  const fileInput = document.getElementById('imageUpload');
-  if (fileInput.files.length > 0) {
-    const file = fileInput.files[0];
-    const uploadForm = new FormData();
-    uploadForm.append('file', file);
-
-    try {
-      const response = await fetch("https://iimg.live/api/upload", {
-        method: "POST",
-        body: uploadForm
-      });
-      const result = await response.json();
-      if (result && result.url) {
-        imageUrl = result.url;
-      } else {
-        throw new Error("No URL returned");
-      }
-    } catch (err) {
-      messageDiv.textContent = "Image upload failed: " + err.message;
-      submitBtn.disabled = false;
-      return;
-    }
-  }
-
   messageDiv.textContent = "Submitting form…";
 
-  // 2. Build Google Form submission
+  // Build Google Form submission
   const gFormData = new FormData();
   gFormData.append("entry.190422142", document.getElementById('title').value);
   gFormData.append("entry.1866049912", document.getElementById('country').value);
@@ -131,13 +100,11 @@ form.addEventListener('submit', async (e) => {
   gFormData.append("entry.1609013511", document.getElementById('restricted').value);
   gFormData.append("entry.1394052519", document.getElementById('location').value);
   gFormData.append("entry.952001199", document.getElementById('description').value);
-  gFormData.append("entry.IMAGE_FIELD_ID", imageUrl); // ← **Replace with your actual new field ID**
 
-  // 3. Post to Google
   try {
     await fetch("https://docs.google.com/forms/d/e/1FAIpQLScmTL4J_Ph2jpx-dZlEmtpW_UA0Jp_rkcmJSxNzMcN94N__dw/formResponse", {
       method: "POST",
-      mode: "no-cors", 
+      mode: "no-cors",
       body: gFormData
     });
     messageDiv.textContent = "Submitted successfully!";

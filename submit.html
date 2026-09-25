@@ -1,5 +1,4 @@
 ---
-layout: none
 ---
 
 <!DOCTYPE html>
@@ -7,89 +6,662 @@ layout: none
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submit Your Thing</title>
+
+  <title>Submit a Thing — Things You Can Do</title>
+
+  <!-- Reuse the site's existing stylesheet. -->
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
+
+  <style>
+    /*
+     * Submit page
+     * ------------
+     * The page deliberately reuses the site's existing CSS above, then adds
+     * only the styles needed for the form itself.
+     */
+    .submit-page {
+      padding: 3rem 1rem 5rem;
+    }
+
+    .submit-container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .submit-intro {
+      margin-bottom: 2rem;
+    }
+
+    .submit-intro h2 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .submit-intro p {
+      max-width: 62ch;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .submit-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      padding: clamp(1.25rem, 4vw, 2.25rem);
+    }
+
+    .form-field {
+      margin: 0 0 1.5rem;
+    }
+
+    .form-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-label,
+    .form-legend {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.45rem;
+    }
+
+    .required {
+      color: #b42318;
+    }
+
+    .form-help {
+      margin: 0 0 0.65rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      opacity: 0.78;
+    }
+
+    .form-control {
+      box-sizing: border-box;
+      display: block;
+      width: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.22);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0.8rem 0.9rem;
+      font: inherit;
+      line-height: 1.4;
+      transition: border-color 120ms ease, box-shadow 120ms ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: currentColor;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+    }
+
+    textarea.form-control {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    fieldset.form-field {
+      border: 0;
+      padding: 0;
+    }
+
+    .choice-list {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      padding: 0.75rem 0.85rem;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 120ms ease, background-color 120ms ease;
+    }
+
+    .choice:hover {
+      background: rgba(0, 0, 0, 0.025);
+    }
+
+    .choice input {
+      margin-top: 0.2rem;
+      flex: 0 0 auto;
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .submit-button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 0.85rem 1.35rem;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .submit-button:disabled {
+      cursor: wait;
+      opacity: 0.6;
+      transform: none;
+    }
+
+    .back-link {
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .status {
+      margin: 0.5rem 0 0;
+      font-size: 0.95rem;
+    }
+
+    .status.error {
+      color: #b42318;
+    }
+
+    .status.success {
+      color: #146c43;
+    }
+
+    .success-panel {
+      display: none;
+      text-align: center;
+      padding: clamp(2rem, 6vw, 4rem) 1rem;
+    }
+
+    .success-panel.is-visible {
+      display: block;
+    }
+
+    .success-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 3.5rem;
+      height: 3.5rem;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      background: rgba(20, 108, 67, 0.12);
+      color: #146c43;
+      font-size: 1.8rem;
+      font-weight: 800;
+    }
+
+    .success-panel h2 {
+      margin: 0 0 0.75rem;
+    }
+
+    .success-panel p {
+      max-width: 50ch;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    .honeypot {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    @media (max-width: 600px) {
+      .submit-page {
+        padding-top: 2rem;
+      }
+
+      .form-actions {
+        align-items: stretch;
+      }
+
+      .submit-button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="page-overlay"></div>
 
-<div class="page-overlay"></div>
-
-<header class="site-header">
-  <div class="header-overlay">
-    <div class="container">
-      <h1>Submit Your Thing</h1>
+  <header class="site-header">
+    <div class="header-overlay">
+      <div class="container">
+        <h1>Things You Can Do</h1>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<main class="container">
-  <form id="customForm" class="custom-form">
-    <label for="title">Title *</label>
-    <input type="text" id="title" required>
+  <main class="submit-page">
+    <div class="submit-container">
 
-    <label for="country">Country</label>
-    <input type="text" id="country">
+      <div class="submit-intro">
+        <h2>Submit a thing</h2>
+        <p>
+          You know something people can do? Let us know here. Share an action,
+          activity, organisation, event, or other practical way people can help.
+        </p>
+      </div>
 
-    <label for="fromHome">Can you do this from home? (Yes/No)</label>
-    <select id="fromHome">
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
+      <div class="submit-card">
 
-    <label for="categories">Categories (comma-separated)</label>
-    <input type="text" id="categories">
+        <form
+          id="thing-submit-form"
+          method="post"
+          target="google-form-response"
+          novalidate
+        >
+          <!--
+            Simple anti-bot honeypot.
+            Google will never see this unless a bot fills it in, because the
+            script removes it before submission.
+          -->
+          <div class="honeypot" aria-hidden="true">
+            <label for="website">Leave this field empty</label>
+            <input
+              type="text"
+              id="website"
+              name="website"
+              tabindex="-1"
+              autocomplete="off"
+            >
+          </div>
 
-    <label for="restricted">Is this thing restricted? (Yes/No)</label>
-    <select id="restricted">
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
+          <div class="form-field">
+            <label class="form-label" for="thing-title">
+              What should be the title of your thing to do?
+              <span class="required" aria-hidden="true">*</span>
+            </label>
 
-    <label for="location">Location</label>
-    <input type="text" id="location">
+            <input
+              class="form-control"
+              type="text"
+              id="thing-title"
+              data-entry="title"
+              autocomplete="off"
+              required
+            >
+          </div>
 
-    <label for="description">Description</label>
-    <textarea id="description" rows="4"></textarea>
+          <div class="form-field">
+            <label class="form-label" for="country">Country</label>
 
-    <button type="submit" id="submitBtn">Submit</button>
-  </form>
+            <p class="form-help">
+              If your activism is legally or in some other way bound to one
+              country, define it here.
+            </p>
 
-  <div class="message" id="message"></div>
-</main>
+            <input
+              class="form-control"
+              type="text"
+              id="country"
+              data-entry="country"
+              autocomplete="country-name"
+            >
+          </div>
 
-<script>
-const form = document.getElementById('customForm');
-const messageDiv = document.getElementById('message');
-const submitBtn = document.getElementById('submitBtn');
+          <fieldset class="form-field">
+            <legend class="form-legend">
+              Can you do this from home?
+              <span class="required" aria-hidden="true">*</span>
+            </legend>
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  submitBtn.disabled = true;
-  messageDiv.textContent = "Submitting form…";
+            <p class="form-help">
+              Choose <strong>Yes</strong> if the thing can be done purely from
+              home/online. Choose <strong>No</strong> if you need to go outside.
+            </p>
 
-  const gFormData = new FormData();
-  gFormData.append("entry.190422142", document.getElementById('title').value);
-  gFormData.append("entry.1866049912", document.getElementById('country').value);
-  gFormData.append("entry.1972481565", document.getElementById('fromHome').value);
-  gFormData.append("entry.657983376", document.getElementById('categories').value);
-  gFormData.append("entry.1609013511", document.getElementById('restricted').value);
-  gFormData.append("entry.1394052519", document.getElementById('location').value);
-  gFormData.append("entry.952001199", document.getElementById('description').value);
+            <div class="choice-list">
+              <label class="choice">
+                <input
+                  type="radio"
+                  data-entry="home"
+                  value="Yes"
+                  required
+                >
+                <span>Yes</span>
+              </label>
 
-  try {
-    await fetch("https://docs.google.com/forms/d/e/1FAIpQLScmTL4J_Ph2jpx-dZlEmtpW_UW_UA0Jp_rkcmJSxNzMcN94N__dw/formResponse", {
-      method: "POST",
-      mode: "no-cors",
-      body: gFormData
+              <label class="choice">
+                <input
+                  type="radio"
+                  data-entry="home"
+                  value="No"
+                >
+                <span>No</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-field">
+            <legend class="form-legend">
+              Which categories does your thing fall into?
+              <span class="required" aria-hidden="true">*</span>
+            </legend>
+
+            <p class="form-help">
+              Please try to find 1–3 descriptive categories.
+            </p>
+
+            <div class="choice-list">
+              <label class="choice">
+                <input
+                  type="checkbox"
+                  data-entry="categories"
+                  value="Volunteering"
+                >
+                <span>Volunteering</span>
+              </label>
+
+              <label class="choice">
+                <input
+                  type="checkbox"
+                  data-entry="categories"
+                  value="Community"
+                >
+                <span>Community</span>
+              </label>
+
+              <label class="choice">
+                <input
+                  type="checkbox"
+                  data-entry="categories"
+                  value="Ecology"
+                >
+                <span>Ecology</span>
+              </label>
+
+              <label class="choice">
+                <input
+                  type="checkbox"
+                  data-entry="categories"
+                  value="Donations"
+                >
+                <span>Donations</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-field">
+            <legend class="form-legend">
+              Is this thing restricted to a certain place?
+              <span class="required" aria-hidden="true">*</span>
+            </legend>
+
+            <p class="form-help">
+              Like, for example, an event happening in your city.
+            </p>
+
+            <div class="choice-list">
+              <label class="choice">
+                <input
+                  type="radio"
+                  data-entry="restricted"
+                  value="Yes"
+                  required
+                >
+                <span>Yes</span>
+              </label>
+
+              <label class="choice">
+                <input
+                  type="radio"
+                  data-entry="restricted"
+                  value="No"
+                >
+                <span>No</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="form-field">
+            <label class="form-label" for="location">
+              Location
+            </label>
+
+            <p class="form-help">
+              Add a city, region, address, or other useful location information
+              when applicable.
+            </p>
+
+            <input
+              class="form-control"
+              type="text"
+              id="location"
+              data-entry="location"
+              autocomplete="address-level2"
+            >
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="description">
+              Description
+              <span class="required" aria-hidden="true">*</span>
+            </label>
+
+            <p class="form-help">
+              Describe the thing that people can do. This will be rendered as
+              a Markdown file, so you can include Github-style Markdown links
+              or HTML.
+            </p>
+
+            <textarea
+              class="form-control"
+              id="description"
+              data-entry="description"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-actions">
+            <a class="back-link" href="{{ site.baseurl }}/">
+              ← Back to things you can do
+            </a>
+
+            <button
+              class="submit-button"
+              type="submit"
+              id="submit-button"
+            >
+              Submit thing
+            </button>
+          </div>
+
+          <p id="form-status" class="status" role="status" aria-live="polite"></p>
+        </form>
+
+        <section
+          id="success-panel"
+          class="success-panel"
+          aria-live="polite"
+          aria-hidden="true"
+        >
+          <div class="success-icon" aria-hidden="true">✓</div>
+
+          <h2>Thanks!</h2>
+
+          <p>
+            Your submission has been sent. Thanks for helping make
+            Things You Can Do better.
+          </p>
+
+          <a class="back-link" href="{{ site.baseurl }}/">
+            ← Back to things you can do
+          </a>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- The Google Forms response page is loaded here, invisibly. -->
+  <iframe
+    name="google-form-response"
+    id="google-form-response"
+    title="Google Forms response"
+    hidden
+  ></iframe>
+
+  <script>
+    /*
+     * ================================================================
+     * GOOGLE FORMS CONFIGURATION
+     * ================================================================
+     *
+     * Google Forms does not use the question text as the POST field name.
+     * Each question has an opaque "entry.<number>" ID.
+     *
+     * Replace the six placeholder values below with the entry IDs from
+     * your Google Form.
+     *
+     * Example:
+     *   title: "123456789"
+     *
+     * The response URL for this form is based on the form ID you supplied:
+     *   https://docs.google.com/forms/d/1tyx9JuAYJYMMB0GP-pcNXRZF1Jd-Mn32XwI-1ncNXTI/formResponse
+     */
+    const GOOGLE_FORM_RESPONSE_URL =
+      "https://docs.google.com/forms/d/1tyx9JuAYJYMMB0GP-pcNXRZF1Jd-Mn32XwI-1ncNXTI/formResponse";
+
+    const ENTRY_IDS = {
+      title: "YOUR_ENTRY_ID_FOR_TITLE",
+      country: "YOUR_ENTRY_ID_FOR_COUNTRY",
+      home: "YOUR_ENTRY_ID_FOR_HOME",
+      categories: "YOUR_ENTRY_ID_FOR_CATEGORIES",
+      restricted: "YOUR_ENTRY_ID_FOR_RESTRICTED",
+      location: "YOUR_ENTRY_ID_FOR_LOCATION",
+      description: "YOUR_ENTRY_ID_FOR_DESCRIPTION"
+    };
+
+    const form = document.getElementById("thing-submit-form");
+    const submitButton = document.getElementById("submit-button");
+    const status = document.getElementById("form-status");
+    const responseFrame = document.getElementById("google-form-response");
+    const successPanel = document.getElementById("success-panel");
+    const websiteHoneypot = document.getElementById("website");
+
+    let submissionStarted = false;
+
+    /*
+     * Apply Google entry.<id> names at runtime so the form only needs the
+     * mapping above to be edited.
+     */
+    document.querySelectorAll("[data-entry]").forEach((field) => {
+      const key = field.dataset.entry;
+      const entryId = ENTRY_IDS[key];
+
+      if (!entryId || entryId.startsWith("YOUR_")) {
+        return;
+      }
+
+      field.name = `entry.${entryId}`;
     });
-    messageDiv.textContent = "Submitted successfully!";
-    form.reset();
-  } catch (err) {
-    messageDiv.textContent = "Submission error: " + err.message;
-  }
-  submitBtn.disabled = false;
-});
-</script>
 
+    function configurationIsReady() {
+      return Object.values(ENTRY_IDS).every(
+        (value) => value && !value.startsWith("YOUR_")
+      );
+    }
+
+    function setStatus(message, type = "") {
+      status.textContent = message;
+      status.className = `status${type ? ` ${type}` : ""}`;
+    }
+
+    function showSuccess() {
+      form.style.display = "none";
+      successPanel.classList.add("is-visible");
+      successPanel.setAttribute("aria-hidden", "false");
+    }
+
+    responseFrame.addEventListener("load", () => {
+      if (!submissionStarted) {
+        return;
+      }
+
+      /*
+       * A regular HTML POST is used instead of fetch() so this works from a
+       * static GitHub Pages site without needing CORS permission from Google.
+       */
+      showSuccess();
+      submissionStarted = false;
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      setStatus("");
+
+      if (!configurationIsReady()) {
+        setStatus(
+          "This page still needs the Google Forms entry IDs in the configuration section.",
+          "error"
+        );
+        return;
+      }
+
+      if (websiteHoneypot.value.trim() !== "") {
+        setStatus("Unable to submit this form.", "error");
+        return;
+      }
+
+      /*
+       * Native browser validation first.
+       */
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      /*
+       * Google Forms needs each checkbox/radio with the same entry ID to be
+       * submitted as repeated entry.<id> fields. The native form controls do
+       * exactly that once their names have been assigned.
+       */
+      const submitter = document.createElement("input");
+      submitter.type = "hidden";
+      submitter.name = "submit";
+      submitter.value = "Submit";
+      form.appendChild(submitter);
+
+      /*
+       * Remove the honeypot from submission.
+       */
+      websiteHoneypot.disabled = true;
+
+      form.action = GOOGLE_FORM_RESPONSE_URL;
+      submissionStarted = true;
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting…";
+      setStatus("Sending your submission…");
+
+      form.submit();
+
+      /*
+       * Keep the success state controlled by the iframe load event.
+       * The page remains static and no server is required.
+       */
+    });
+  </script>
 </body>
 </html>
